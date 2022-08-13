@@ -1,0 +1,26 @@
+{{ $id := delimit (shuffle (seq 1 9)) "" }}
+
+{{ if not (.Get "file") }}
+  {{ errorf "If you want to use the \"collapsable code\" shortcode, you need to pass a mandatory \"file\" param. The issue occured in %q (%q)" .Page.File .Page.Permalink }}
+{{ end }}
+{{ $code := readFile (.Get "file") }}
+
+{{ if not (.Get "language") }}
+  {{ errorf "If you want to use the \"collapsable code\" shortcode, you need to pass a mandatory \"language\" param. The issue occured in %q (%q)" .Page.File .Page.Permalink }}
+{{ end }}
+{{ $lang := .Get "language" }}
+
+<div class="collapsable-code">
+  <input id="{{ $id }}" type="checkbox" {{ if ( eq ( .Get "isCollapsed" ) "true" ) -}} checked {{- end }} />
+  <label for="{{ $id }}">
+    <span class="collapsable-code__language">{{ $lang }}</span>
+    {{ if .Get "title" }}
+      <span class="collapsable-code__title">{{ .Get "title" | markdownify }}</span>
+    {{ end }}
+    <span class="collapsable-code__toggle" data-label-expand="{{ .Get "expand" | default "△" }}" data-label-collapse="{{ .Get "collapse" | default "▽" }}"></span>
+  </label>
+  {{/* この $code の場所を変えるとレイアウトが壊れるので注意 */}}
+  <pre class="language-{{ $lang }}"><code>
+{{ $code }}
+  </code></pre>
+</div>
