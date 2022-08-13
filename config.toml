@@ -1,4 +1,4 @@
-baseURL = "http://tiramister.net/blog/"
+baseURL = "https://tiramister.net/blog/"
 languageCode = "ja"
 defaultContentLanguage = "ja"
 theme = "terminal"
