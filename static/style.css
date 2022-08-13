@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'NotoSansJP';
+  font-style: normal;
+  font-weight: normal;
+  src: url("./fonts/NotoSansJP-Regular.otf")
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  font-style: normal;
+  font-weight: bold;
+  src: url("./fonts/NotoSansJP-Bold.otf")
+}
+
+@font-face {
+  font-family: 'menlo';
+  font-style: normal;
+  font-weight: normal;
+  src: url("./fonts/Menlo-Regular.woff")
+}
+
+body {
+  font-family: 'menlo', 'NotoSansJP', monospace;
+}
+
+code, pre {
+  font-family: 'menlo', monospace !important;
+}
