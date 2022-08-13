@@ -1,28 +1,33 @@
 @font-face {
-  font-family: 'NotoSansJP';
+  font-family: "NotoSansJP";
   font-style: normal;
   font-weight: normal;
-  src: url("./fonts/NotoSansJP-Regular.otf")
+  src: url("./fonts/NotoSansJP-Regular.otf");
 }
 
 @font-face {
-  font-family: 'NotoSansJP';
-  font-style: normal;
-  font-weight: bold;
-  src: url("./fonts/NotoSansJP-Bold.otf")
-}
-
-@font-face {
-  font-family: 'menlo';
+  font-family: "menlo";
   font-style: normal;
   font-weight: normal;
-  src: url("./fonts/Menlo-Regular.woff")
+  src: url("./fonts/Menlo-Regular.woff");
 }
 
 body {
-  font-family: 'menlo', 'NotoSansJP', monospace;
+  font-family: "menlo", "NotoSansJP", monospace;
 }
 
-code, pre {
-  font-family: 'menlo', monospace !important;
+code,
+pre {
+  font-family: "menlo", monospace !important;
+}
+
+/* collapse */
+details div.content {
+  border: 1px solid silver;
+  padding: 20px;
+}
+
+details summary:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
