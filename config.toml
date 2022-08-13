@@ -1,4 +1,16 @@
-baseURL = 'http://example.com/blog/'
-languageCode = 'ja'
-theme = 'terminal'
+baseURL = "http://tiramister.net/blog/"
+languageCode = "ja"
+defaultContentLanguage = "ja"
+theme = "terminal"
 title = "Tiramister's Blog"
+
+[params]
+  themeColor = "green"
+  centerTheme = true
+  Toc = true
+  TocTitle = "目次"
+  showLastUpdated = true
+  enableGitInfo = true
+  
+  [params.logo]
+    logoText = "Tiramister's Blog"
