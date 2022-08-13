@@ -1,8 +1,8 @@
-+++
-title = "Sample Post"
-date = "2022-08-13T08:46:53+09:00"
-draft = true
-+++
+---
+title: "Sample Post"
+date: "2022-08-13T08:46:53+09:00"
+draft: true
+---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eros leo, elementum at purus vitae, vehicula tincidunt orci. Suspendisse in dolor scelerisque metus mattis accumsan. Aenean ac sodales arcu, sit amet dictum arcu. Sed ante purus, vulputate vel lobortis in, ultrices ac ipsum. Nullam massa ex, efficitur id tellus interdum, tempor volutpat dolor. Nulla pellentesque gravida lectus, sed luctus ante eleifend in. Pellentesque vestibulum, tortor sollicitudin egestas pellentesque, eros elit tincidunt neque, nec pellentesque lorem turpis et dolor.
 
