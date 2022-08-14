@@ -123,6 +123,6 @@ $G\'$ のうち、 $L_0$ から $L_1$ 、 $L_1$ から $L_2$ 、......、 $L_{l-
 
 やるべきことは単純だが、実装は結構長くなる。
 
-{{< code language="cpp" title="実装" isCollapsed="true" file="/content/posts/hopcroft-karp/main.cpp" >}}
-
 verify は [Library Checker](https://judge.yosupo.jp/submission/45401) を利用した。
+
+{{< code file="main.cpp" language="cpp" >}}
