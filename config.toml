@@ -9,9 +9,11 @@ hasCJKLanguage = true
 [params]
 themeColor = "green"
 centerTheme = true
+favicon = "img/logo_red.png"
+showLastUpdated = true
+
 Toc = true
 TocTitle = "目次"
-showLastUpdated = true
 readMore = "続きを読む"
 
 [params.logo]
