@@ -3,6 +3,8 @@ languageCode = "ja"
 defaultContentLanguage = "ja"
 theme = "terminal"
 title = "Tiramister's Blog"
+enableGitInfo = true
+hasCJKLanguage = true
 
 [params]
 themeColor = "green"
@@ -10,7 +12,7 @@ centerTheme = true
 Toc = true
 TocTitle = "目次"
 showLastUpdated = true
-enableGitInfo = true
+readMore = "続きを読む"
 
 [params.logo]
 logoText = "Tiramister's Blog"
