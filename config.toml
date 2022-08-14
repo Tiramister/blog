@@ -21,10 +21,6 @@ logoText = "Tiramister's Blog"
 
 [menu]
 [[menu.main]]
-identifier = "github"
-name = "🛠️ GitHub"
-url = "https://github.com/Tiramister/blog"
-[[menu.main]]
-identifier = "twitter"
-name = "💬 Twitter"
-url = "https://twitter.com/mistterpp"
+identifier = "algorithm"
+name = "アルゴリズム・データ構造"
+url = "/algorithm/"
