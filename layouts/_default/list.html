@@ -19,7 +19,7 @@
   <h3>最近の記事</h3>
   <div class="posts">
     {{ $subpages := cond .IsHome .Site.RegularPages .RegularPagesRecursive }}
-    {{ range $subpages.ByDate }}
+    {{ range $subpages.ByDate.Reverse }}
       <div class="post on-list">
         <h1 class="post-title">
           <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
