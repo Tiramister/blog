@@ -1,10 +1,7 @@
 {{ define "main" }}
-  {{ if not .IsHome }}
-    <h2>{{ .Title }}</h2>
-  {{ end }}
-
   {{ if .Content }}
-    <div class="index-content {{ if .Params.framed }}framed{{ end }}">
+    <div class="index-content framed">
+      <h2>{{ .Title }}</h2>
       {{ .Content }}
     </div>
   {{ end }}
@@ -14,7 +11,7 @@
     <dl>
       {{ range .Sections }}
         <dt><a href="{{ .Permalink }}">{{ .Title }}</a></dt>
-        <dd>{{ .Summary }}</dd>
+        <dd>{{ .Content }}</dd>
       {{ end }}
     </dl>
   {{ end }}
