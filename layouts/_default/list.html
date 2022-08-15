@@ -7,7 +7,6 @@
   {{ end }}
 
   {{ if gt (len .Sections) 0 }}
-    <h3>セクション</h3>
     <dl>
       {{ range .Sections }}
         <dt><a href="{{ .Permalink }}">{{ .Title }}</a></dt>
@@ -16,7 +15,6 @@
     </dl>
   {{ end }}
 
-  <h3>最近の記事</h3>
   <div class="posts">
     {{ $subpages := cond .IsHome .Site.RegularPages .RegularPagesRecursive }}
     {{ range $subpages.ByDate.Reverse }}
