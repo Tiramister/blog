@@ -32,10 +32,10 @@
         </div>
 
         <span class="post-tags">
-          📁 <a href="{{ .CurrentSection.Permalink }}">{{ .CurrentSection.Title }}</a>
+          <a href="{{ .CurrentSection.Permalink }}">📁 {{ .CurrentSection.Title }}</a>
           {{ range .Params.tags }}
-            #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-              {{- . -}}
+            <a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
+              #{{- . -}}
             </a>&nbsp;
           {{ end }}
         </span>
@@ -46,12 +46,9 @@
           {{- .Summary | markdownify -}}
           {{ if .Truncated }}...{{ end }}
         </div>
-        {{ if .Truncated }}
-          <div>
-            <a class="read-more button"
-              href="{{.RelPermalink}}">{{ $.Site.Params.ReadMore }} →</a>
-          </div>
-        {{ end }}
+        <div>
+          <a class="read-more button" href="{{.RelPermalink}}">{{ $.Site.Params.ReadMore }} →</a>
+        </div>
       </div>
     {{ end }}
 
