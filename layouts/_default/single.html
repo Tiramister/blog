@@ -13,15 +13,14 @@
     {{ end }}
   </div>
 
-  {{ if .Params.tags }}
-    <span class="post-tags">
-      {{ range .Params.tags }}
-        <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">#{{ . }}</a>&nbsp;
-      {{ end }}
-    </span>
-  {{ end }}
+  <span class="post-tags">
+    <a href="{{ .CurrentSection.Permalink }}">📁 {{ .CurrentSection.Title }}</a>&nbsp;
+    {{ range .Params.tags }}
+      <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">#{{ . }}</a>&nbsp;
+    {{ end }}
+  </span>
 
-  {{ if .Params.links }}
+  {{ if .Params.tags }}
     <span class="post-tags">
       {{ range .Params.links }}
         <a href="{{ .url }}">📎 {{ .label }}</a>&nbsp;

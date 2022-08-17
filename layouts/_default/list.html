@@ -32,7 +32,7 @@
         </div>
 
         <span class="post-tags">
-          <a href="{{ .CurrentSection.Permalink }}">📁 {{ .CurrentSection.Title }}</a>
+          <a href="{{ .CurrentSection.Permalink }}">📁 {{ .CurrentSection.Title }}</a>&nbsp;
           {{ range .Params.tags }}
             <a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
               #{{- . -}}
