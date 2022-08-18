@@ -31,3 +31,8 @@ details summary:hover {
   cursor: pointer;
   opacity: 0.8;
 }
+
+/* spacing */
+.ymargin {
+  margin: 16px 0px 20px;
+}

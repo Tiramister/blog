@@ -1,6 +1,4 @@
-<details>
+<details class="ymargin">
   <summary>{{ .Get "summary" }}</summary>
-  <div class="content">
-    {{ .Inner | markdownify }}
-  </div>
+  <div class="content">{{ .Inner | markdownify }}</div>
 </details>
