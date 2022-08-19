@@ -2,6 +2,11 @@
 title: ICPC国内予選 2020 参加記
 date: 2020-11-07
 tags: [ICPC]
+links:
+  - label: ICPC コンテストページ
+    url: https://icpc.iisf.or.jp/2020-yokohama/domestic/
+  - label: AOJ 問題ページ
+    url: https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim?year=2020
 ---
 
 ## 結果
