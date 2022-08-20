@@ -1,7 +1,7 @@
 ---
 title: AtCoder Grand Contest 047 C - Product Modulo
 date: 2020-08-10
-tags: [AtCoder, AGC]
+tags: [atcoder, agc]
 links:
   - label: 問題
     url: https://atcoder.jp/contests/agc047/tasks/agc047_c

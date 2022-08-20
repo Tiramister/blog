@@ -1,7 +1,7 @@
 ---
-title: ICPC模擬国内予選 2020 参加記
+title: ICPC 模擬国内予選 2020 参加記
 date: 2020-10-27
-tags: [ICPC]
+tags: [icpc]
 links:
   - label: JAG-ICPC コンテストページ
     url: https://jag-icpc.org/?2020%2FPractice%2F%E6%A8%A1%E6%93%AC%E5%9B%BD%E5%86%85%E4%BA%88%E9%81%B8

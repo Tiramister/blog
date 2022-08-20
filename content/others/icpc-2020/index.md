@@ -1,7 +1,7 @@
 ---
-title: ICPC国内予選 2020 参加記
+title: ICPC 国内予選 2020 参加記
 date: 2020-11-07
-tags: [ICPC]
+tags: [icpc]
 links:
   - label: ICPC コンテストページ
     url: https://icpc.iisf.or.jp/2020-yokohama/domestic/

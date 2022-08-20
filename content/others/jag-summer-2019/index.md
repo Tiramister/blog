@@ -1,7 +1,7 @@
 ---
 title: Mister の JAG 夏合宿 2019 参加記
 date: 2019-09-17
-tags: [ICPC]
+tags: [icpc]
 links:
   - label: Day1
     url: https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day1
