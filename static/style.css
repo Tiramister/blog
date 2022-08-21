@@ -36,3 +36,9 @@ details summary:hover {
 .ymargin {
   margin: 16px 0px 20px;
 }
+
+/* button text color */
+.button__text,
+.button__icon {
+  color: #104732;
+}
