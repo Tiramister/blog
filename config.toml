@@ -15,6 +15,9 @@ showLastUpdated = true
 Toc = true
 TocTitle = "目次"
 readMore = "続きを読む"
+newerPosts = "新しい記事"
+olderPosts = "古い記事"
+missingBackButtonLabel = "ホームに戻る"
 
 [params.logo]
 logoText = "Tiramister's Blog"
