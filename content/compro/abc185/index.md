@@ -1,6 +1,6 @@
 ---
 title: AtCoder Beginner Contest 185
-date:
+date: 2020-12-13
 tags: [atcoder, abc]
 links:
   - label: Contest link

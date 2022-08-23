@@ -1,6 +1,6 @@
 ---
 title: AtCoder Regular Contest 084 E - Finite Encyclopedia of Integer Sequences
-date:
+date: 2020-11-28
 tags: [atcoder, arc]
 links:
   - label: Problem link
