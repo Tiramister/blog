@@ -32,11 +32,11 @@ for (id, (language, code)) in enumerate(findall(r'```(.*?)=\n(.*?)```')):
     filename: str = f'{id}.{language}'
     with open(filename, 'w') as f:
         f.write(code)
-sub(r'```(.*?)```', r'{{<code file="main.cpp" language="cpp">}}')
+sub(r'```(.*?)```', r'<code>')
 
 # リンクを退避
-links: list[tuple[str, str]] = findall(r'\[(.*?)\]\((.*?)\)')
-sub(r'\[.*?\]\(.*?\)', '')
+links: list[tuple[str, str]] = findall(r'\[([^\[\]]*?)\]\((http.*?)\)')
+sub(r'\[[^\[\]]*?\]\(http.*?\)', '')
 
 # 前後スペース
 sub(r'(\$.+?\$)', r' \1 ')
@@ -44,8 +44,10 @@ sub(r'(\*.+?\*)', r' \1 ')
 sub(r'(\*\*.+?\*\*)', r' \1 ')
 
 # 数式内の特殊文字にバックスラッシュ
-sub(r'([\\_\'\{\}])', r'\\\1')
+sub(r'([\\_\'\^\{\}])', r'\\\1')
 
+# shortcode を戻す
+sub(r'<code>', r'{{<code file="main.cpp" language="cpp">}}')
 
 print(r'''---
 title: {}
