@@ -34,6 +34,9 @@ sub_all(pattern, '')
 pattern = '###### tags: .*?\n'
 sub_all(pattern, '')
 
+# 改行タグ削除
+sub_all(r'<br[/\ ]*>', '')
+
 # ソースコードを退避
 code_id = 0
 pattern = r'```(.*?)=\n(.*?)```'
@@ -77,9 +80,10 @@ links: list[tuple[str, str]] = findall(pattern)
 sub_all(pattern, '')
 
 # 数式を戻す
-pattern = r'([\\_\'\^\{\}])'
+pattern = r'([_\'\^\{\}])'
 for (id, eq) in enumerate(eqs):
     # 記号をエスケープ
+    eq = re.sub(r'\\', r'\\\\\\\\', eq)
     eq = re.sub(pattern, r'\\\1', eq)
     sub_all(f'<math-{id}>', eq)
 
