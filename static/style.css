@@ -45,3 +45,8 @@ details summary:hover {
 a.a-button {
   border-radius: 8px;
 }
+
+/* link */
+.table-of-contents a {
+  text-decoration: none;
+}
