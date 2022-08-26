@@ -37,8 +37,11 @@ details summary:hover {
   margin: 16px 0px 20px;
 }
 
-/* button text color */
+/* button */
 .button__text,
 .button__icon {
   color: #104732;
+}
+a.a-button {
+  border-radius: 8px;
 }
