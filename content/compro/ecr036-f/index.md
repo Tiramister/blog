@@ -1,7 +1,7 @@
 ---
 title: "Educational Codeforces Round 36 F - Imbalance Value of a Tree"
 date: 2020-09-11
-tags: [codeforces, div2]
+tags: [codeforces]
 links:
   - label: "Problem link"
     url: "https://codeforces.com/contest/915/problem/F"

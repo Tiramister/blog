@@ -1,7 +1,7 @@
 ---
 title: "DDCC 2019 予選 D - チップ・ストーリー　～黄金編～"
 date: 2020-09-06
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: "Problem link"
     url: "https://atcoder.jp/contests/ddcc2019-qual/tasks/ddcc2018_qual_d"

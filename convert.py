@@ -90,7 +90,7 @@ for (id, eq) in enumerate(eqs):
 print(r'''---
 title: "{}"
 date:
-tags: [atcoder, abc]
+tags: [atcoder]
 links:'''.format(title))
 for (label, url) in links:
     print(r'''  - label: "{}"

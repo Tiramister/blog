@@ -1,7 +1,7 @@
 ---
 title: AtCoder Grand Contest 046 C - Shift
 date: 2020-11-28
-tags: [atcoder, agc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/agc046/tasks/agc046_c

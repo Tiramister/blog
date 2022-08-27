@@ -1,7 +1,7 @@
 ---
 title: "JAG 夏合宿 2014 day2C - Clique Coloring"
 date: 2020-09-04
-tags: [icpc, volunteer]
+tags: [icpc, voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/JAG/Summer/2631?year=2014"

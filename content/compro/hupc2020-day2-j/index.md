@@ -1,7 +1,7 @@
 ---
 title: "HUPC 2020 day2 J - Partition"
 date: 2020-09-23
-tags: [volunteer]
+tags: [voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/UOA/UAPC/3086"

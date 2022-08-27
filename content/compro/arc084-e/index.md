@@ -1,7 +1,7 @@
 ---
 title: AtCoder Regular Contest 084 E - Finite Encyclopedia of Integer Sequences
 date: 2020-11-28
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/arc084/tasks/arc084_c

@@ -1,7 +1,7 @@
 ---
 title: AtCoder Grand Contest 047 A - Integer Product
 date: 2020-08-10
-tags: [atcoder, agc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/agc047/tasks/agc047_a

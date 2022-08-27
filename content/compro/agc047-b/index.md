@@ -1,7 +1,7 @@
 ---
 title: AtCoder Grand Contest 047 B - First Second
 date: 2020-08-10
-tags: [atcoder, agc]
+tags: [atcoder]
 links:
   - label: 問題
     url: https://atcoder.jp/contests/agc047/tasks/agc047_b

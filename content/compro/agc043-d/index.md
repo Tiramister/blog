@@ -1,7 +1,7 @@
 ---
 title: "AtCoder Grand Contest 043 D - Merge Triplets"
 date: 2020-09-06
-tags: [atcoder, agc]
+tags: [atcoder]
 links:
   - label: "Problem link"
     url: "https://atcoder.jp/contests/agc043/tasks/agc043_d"

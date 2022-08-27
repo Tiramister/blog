@@ -1,7 +1,7 @@
 ---
 title: "Educational Codeforces Round 36 G - Coprime Arrays"
 date: 2020-09-09
-tags: [codeforces, div2]
+tags: [codeforces]
 links:
   - label: "Problem link"
     url: "https://codeforces.com/contest/915/problem/G"

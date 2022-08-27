@@ -1,7 +1,7 @@
 ---
 title: AtCoder Regular Contest 081 E - Don't Be a Subsequence
 date: 2020-11-26
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/arc081/tasks/arc081_c

@@ -1,7 +1,7 @@
 ---
 title: "Educational Codeforces Round 94 G - Mercenaries"
 date: 2020-08-27
-tags: [codeforces, div2]
+tags: [codeforces]
 links:
   - label: "Problem link"
     url: "https://codeforces.com/contest/1400/problem/G"

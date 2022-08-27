@@ -1,7 +1,7 @@
 ---
 title: "JAG 夏合宿 2014 day4E - AI"
 date: 2020-09-03
-tags: [icpc, volunteer]
+tags: [icpc, voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/2643"

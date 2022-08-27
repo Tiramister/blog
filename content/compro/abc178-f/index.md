@@ -1,7 +1,7 @@
 ---
 title: "AtCoder Beginner Contest 178 F - Contrast"
 date: 2020-09-13
-tags: [atcoder, abc]
+tags: [atcoder]
 links:
   - label: "Problem link"
     url: "https://atcoder.jp/contests/abc178/tasks/abc178_f"

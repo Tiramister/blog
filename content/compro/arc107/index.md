@@ -1,7 +1,7 @@
 ---
 title: "AtCoder Regular Contest 107"
 date: 2020-11-01
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: "Contest link"
     url: "https://atcoder.jp/contests/arc107"

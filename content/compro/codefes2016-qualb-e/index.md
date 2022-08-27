@@ -1,7 +1,7 @@
 ---
 title: "CODE FESTIVAL 2016 qual B E - Lexicographical disorder"
 date: 2020-09-26
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: "Problem link"
     url: "https://atcoder.jp/contests/code-festival-2016-qualb/tasks/codefestival_2016_qualB_e"

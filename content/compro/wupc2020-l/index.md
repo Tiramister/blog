@@ -1,7 +1,7 @@
 ---
 title: "WUPC 2020 L - Count Pow Sum"
 date: 2020-09-23
-tags: [volunteer]
+tags: [voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/VPC/WUPC/3162"

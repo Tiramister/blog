@@ -1,7 +1,7 @@
 ---
 title: "ACPC 2020 day1 F - コマの配置"
 date: 2020-09-20
-tags: [volunteer]
+tags: [voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/VPC/TUATPC/3198"

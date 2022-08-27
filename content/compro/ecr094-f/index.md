@@ -1,7 +1,7 @@
 ---
 title: "Educational Codeforces Round 94 F. x-prime Substrings"
 date: 2020-09-11
-tags: [codeforces, div2]
+tags: [codeforces]
 links:
   - label: "Problem link"
     url: "https://codeforces.com/contest/1400/problem/F"

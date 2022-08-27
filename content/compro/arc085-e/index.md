@@ -1,7 +1,7 @@
 ---
 title: AtCoder Regular Contest 085 E - MUL
 date: 2020-11-27
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/arc085/tasks/arc085_c

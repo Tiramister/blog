@@ -1,7 +1,7 @@
 ---
 title: AtCoder Regular Contest 080 E - Young Maids
 date: 2020-11-26
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/arc080/tasks/arc080_c

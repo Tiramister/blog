@@ -1,7 +1,7 @@
 ---
 title: "第 5 回 ドワンゴからの挑戦状 本選 B - XOR Spread"
 date: 2020-08-30
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: "Problem link"
     url: "https://atcoder.jp/contests/dwacon5th-final/tasks/dwacon5th_final_b"

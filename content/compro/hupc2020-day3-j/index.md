@@ -1,7 +1,7 @@
 ---
 title: "HUPC 2020 day3 J - Proper Instructions"
 date: 2020-09-17
-tags: [volunteer]
+tags: [voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/VPC/CVPC/3181"

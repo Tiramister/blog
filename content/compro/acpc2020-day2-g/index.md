@@ -1,7 +1,7 @@
 ---
 title: "ACPC 2020 day2 G - Connect the dots"
 date: 2020-09-23
-tags: [volunteer]
+tags: [voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/UOA/UAPC/3506"

@@ -1,7 +1,7 @@
 ---
 title: "キーエンス プログラミング コンテスト 2019 F - Paper Cutting"
 date: 2020-09-26
-tags: [atcoder, arc]
+tags: [atcoder]
 links:
   - label: "Problem link"
     url: "https://atcoder.jp/contests/keyence2019/tasks/keyence2019_f"

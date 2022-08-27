@@ -1,7 +1,7 @@
 ---
 title: "ACPC 2020 day2 J - DEG MUL SUM"
 date: 2020-09-24
-tags: [volunteer]
+tags: [voluntary]
 links:
   - label: "Problem link"
     url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/UOA/UAPC/3509"

@@ -1,7 +1,7 @@
 ---
 title: AtCoder Beginner Contest 182
 date: 2020-11-08
-tags: [atcoder, abc]
+tags: [atcoder]
 links:
   - label: Contest link
     url: https://atcoder.jp/contests/abc182

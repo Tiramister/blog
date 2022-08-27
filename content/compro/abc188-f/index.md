@@ -1,7 +1,7 @@
 ---
 title: AtCoder Beginner Contest 188 F - +1-1x2
 date: 2021-01-11
-tags: [atcoder, abc]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/abc188/tasks/abc188_f

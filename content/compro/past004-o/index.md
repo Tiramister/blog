@@ -1,7 +1,7 @@
 ---
 title: 第四回 アルゴリズム実技検定(PAST) O - 宝箱
 date: 2020-11-09
-tags: [atcoder, past]
+tags: [atcoder]
 links:
   - label: Problem link
     url: https://atcoder.jp/contests/past202010-open/tasks/past202010_o
