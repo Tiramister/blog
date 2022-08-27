@@ -3,12 +3,14 @@
 {{ end }}
 {{ $file := .Get "src" }}
 
-{{ $image := .Page.Resources.GetMatch $file }}
-{{ if eq $image nil }}
-  {{ errorf "%s not found" $file }}
-{{ end }}
+{{ if $file }}
+  {{ $image := .Page.Resources.GetMatch $file }}
+  {{ if eq $image nil }}
+    {{ errorf "%s not found" $file }}
+  {{ end }}
 
-<img src="{{ $image.Permalink }}"
-  {{ with .Get "alt" }}alt="{{ . | plainify }}"{{ end }}
-  class="{{- default "center" (.Get "position") }}"
-  {{ with .Get "style" }}style="{{ . | safeCSS }}"{{ end }} />
+  <img src="{{ $image.Permalink }}"
+    {{ with .Get "alt" }}alt="{{ . | plainify }}"{{ end }}
+    class="{{- default "center" (.Get "position") }}"
+    {{ with .Get "style" }}style="{{ . | safeCSS }}"{{ end }} />
+{{ end }}

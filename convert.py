@@ -1,99 +1,154 @@
 import re
 import sys
+from typing import Callable, Optional, Match
 
 
-text: str = sys.stdin.read()
+def eprint(text: str) -> None:
+    print(text, file=sys.stderr)
 
 
-def search(pattern: str):
-    global text
-    return re.search(pattern, text, flags=re.DOTALL)
+class PatternType:
+    def __init__(self, pattern: str, process: Callable[[Match], str]):
+        self.__pattern: str = pattern
+        self.__process: Callable[[Match], str] = process
+
+    def match(self, text: str) -> Optional[str]:
+        match = re.search(self.__pattern, text)
+        if match:
+            return self.__process(match)
+        else:
+            return None
+
+    def subst(self, text: str, repl: str) -> str:
+        return re.sub(self.__pattern, repl, text, 1)
 
 
-def findall(pattern: str):
-    global text
-    return re.findall(pattern, text, flags=re.DOTALL)
+class FrontMatter:
+    title: str = ""
+    date: str = ""
+    tags: list[str] = []
+    links: list[tuple[str, str]] = []
+
+    @classmethod
+    def to_string(cls) -> str:
+        texts: list[str] = []
+        texts.append("---")
+        texts.append(f'title: "{cls.title}"')
+        texts.append(f'date: {cls.date}')
+        texts.append(f'tags: [{",".join(cls.tags)}]')
+        texts.append(f'links:')
+        for label, url in cls.links:
+            texts.append(f"  - label: {label}")
+            texts.append(f"    url: {url}")
+        texts.append("---")
+        return "\n".join(texts)
 
 
-def sub_all(pattern: str, repl: str):
-    global text
-    text = re.sub(pattern, repl, text, flags=re.DOTALL)
+def insert_spaces(text: str) -> str:
+    return f' {text} '
 
 
-def sub_once(pattern: str, repl: str):
-    global text
-    text = re.sub(pattern, repl, text, count=1, flags=re.DOTALL)
+def set_title(title: str) -> str:
+    FrontMatter.title = title
+    return ""
 
 
-# タイトル退避
-pattern = '\A# (.*?)\n'
-title: str = search(pattern).group(1)
-sub_all(pattern, '')
+def set_tags(tags: str) -> str:
+    for tag in ['atcoder', 'codeforces', 'icpc', 'topcoder']:
+        if re.search(tag, tags, re.IGNORECASE):
+            FrontMatter.tags.append(tag)
+    return ""
 
-# タグ削除
-pattern = '###### tags: .*?\n'
-sub_all(pattern, '')
 
-# 改行タグ削除
-sub_all(r'<br[/\ ]*>', '')
+def save_code(language: str, code: str) -> str:
+    if not hasattr(save_code, "id"):
+        save_code.id = 0
+    id: int = save_code.id
+    save_code.id += 1
 
-# ソースコードを退避
-code_id = 0
-pattern = r'```(.*?)=\n(.*?)```'
-while True:
-    match = search(pattern)
-    if match == None:
-        break
+    if not language:
+        language = "txt"
+    filename: str = f'{id}.{language}'
 
-    (language, code) = match.groups()
-    if language == '':
-        language = 'txt'
-
-    filename = f'{code_id}.{language}'
-    sub_once(
-        pattern, '{{' + f'<code file="{filename}" language="{language}">' + '}}')
     with open(filename, 'w') as f:
         f.write(code)
 
-# 複数行の数式を退避
-eqs: list[str] = []
-pattern = r'(\$\$.*?\$\$)'
-while True:
-    eq = search(pattern)
-    if eq == None:
-        break
-    sub_once(pattern, f' <math-{len(eqs)}> ')
-    eqs.append(eq.group(0))
+    return f'{{{{<code file="{filename}" language="{language}">}}}}'
 
-# インライン数式を退避
-pattern = r'(\$.*?\$)'
-while True:
-    eq = search(pattern)
-    if eq == None:
-        break
-    sub_once(pattern, f' <math-{len(eqs)}> ')
-    eqs.append(eq.group(0))
 
-# リンクを退避
-pattern = r'\[([^\[\]]*?)\]\((http.*?)\)'
-links: list[tuple[str, str]] = findall(pattern)
-sub_all(pattern, '')
+def escapse_equation(equation: str) -> str:
+    # バックスラッシュ
+    equation = re.sub(r'\\', r'\\\\\\\\', equation)
+    # それ以外の記号
+    equation = re.sub(r'([_\'\^\{\}])', r'\\\1', equation)
+    # align -> aligned
+    equation = re.sub(r'\{align\}', '{aligned}', equation)
+    return insert_spaces(equation)
 
-# 数式を戻す
-pattern = r'([_\'\^\{\}])'
-for (id, eq) in enumerate(eqs):
-    # 記号をエスケープ
-    eq = re.sub(r'\\', r'\\\\\\\\', eq)
-    eq = re.sub(pattern, r'\\\1', eq)
-    sub_all(f'<math-{id}>', eq)
 
-print(r'''---
-title: "{}"
-date:
-tags: [atcoder]
-links:'''.format(title))
-for (label, url) in links:
-    print(r'''  - label: "{}"
-    url: "{}"'''.format(label, url))
-print("---")
+def replace_image(alt: str) -> str:
+    return f'{{{{<image src="" alt="{alt}">}}}}'
+
+
+def replace_link(label: str, url: str) -> str:
+    for problem_text in ['問題', 'problem']:
+        if re.search(problem_text, label, re.IGNORECASE):
+            FrontMatter.links.append((label, url))
+            return ""
+    for submission_text in ['提出', 'submission']:
+        if re.search(submission_text, label, re.IGNORECASE):
+            FrontMatter.links.append((label, url))
+            return ""
+    return insert_spaces(f'[{label}]({url})')
+
+
+pattern_types: list[PatternType] = [
+    # タイトル
+    PatternType('(?:^|\n)# (.*)', lambda match: set_title(match.group(1))),
+    # タグ
+    PatternType('(?:^|\n)#{6} tags: (.*)',
+                lambda match: set_tags(match.group(1))),
+    # 改行コード
+    PatternType(r'<br\s?/?>', lambda _: ""),
+    # ソースコード
+    PatternType(r'```(\w*)=?\n((?:.|\s)*?)```',
+                lambda match: save_code(match.group(1), match.group(2))),
+    # 複数行数式
+    PatternType(r'\$\$(?:.|\s)*?\$\$',
+                lambda match: escapse_equation(match.group())),
+    # インライン数式
+    PatternType(r'\$(?:.|\s)*?\$',
+                lambda match: escapse_equation(match.group())),
+    # 画像
+    PatternType(r'!\[([^\[\]]*?)\]\(.*?\)',
+                lambda match: replace_image(match.group(1))),
+    # リンク
+    PatternType(r'\[([^\[\]]*?)\]\((http.*?)\)',
+                lambda match: replace_link(match.group(1), match.group(2))),
+    # 太字 + 斜体
+    PatternType(r'\*\*\*.*?\*\*\*',
+                lambda match: insert_spaces(match.group())),
+    # 太字
+    PatternType(r'\*\*.*?\*\*',
+                lambda match: insert_spaces(match.group())),
+    # 斜体
+    PatternType(r'\*.*?\*',
+                lambda match: insert_spaces(match.group())),
+]
+
+text: str = sys.stdin.read()
+
+new_texts: list[str] = []
+for pattern_type in pattern_types:
+    while True:
+        new_text: Optional[str] = pattern_type.match(text)
+        if new_text == None:
+            break
+        text = pattern_type.subst(text, f'<{len(new_texts)}>')
+        new_texts.append(new_text)
+
+for id, new_text in enumerate(new_texts):
+    text = re.sub(f'<{id}>', new_text, text)
+
+print(FrontMatter.to_string())
 print(text)
