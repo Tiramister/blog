@@ -3,11 +3,15 @@
   <ul>
     {{ $type := .Type }}
     {{ range .Data.Terms.Alphabetical }}
-      <li>
-        <a class="terms-title" href="{{ printf "%s/%s" $type .Name | absLangURL }}">
-          {{ .Name }} ({{ .Count }})
-        </a>
-      </li>
+      {{ $name := .Name }}
+      {{ $count := .Count }}
+      {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
+        <li>
+          <a class="terms-title" href="{{ .Permalink }}">
+            {{ .Name }} ({{ $count }})
+          </a>
+        </li>
+      {{ end }}
     {{ end }}
   </ul>
 </div>
