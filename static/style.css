@@ -47,6 +47,7 @@ a.a-button {
 }
 
 /* link */
-.table-of-contents a {
+.table-of-contents a,
+a.noul {
   text-decoration: none;
 }

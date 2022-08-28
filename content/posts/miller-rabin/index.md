@@ -1,6 +1,7 @@
 ---
 title: Miller-Rabin 素数判定法
 date: 2021-03-05
+tags: [algorithm]
 links:
   - label: Verify
     url: https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=5265639#1

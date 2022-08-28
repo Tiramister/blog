@@ -1,5 +1,5 @@
 ---
-title: "JOI 2018 本選 C - 団子職人(Dango Maker) [9]"
+title: "JOI 2018 本選 C - 団子職人(Dango Maker)"
 date: 2020-01-30
 tags: [joi]
 links:

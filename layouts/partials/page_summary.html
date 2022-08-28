@@ -13,9 +13,11 @@
 
   <span class="post-tags">
     {{ range .Params.tags }}
-      <a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-        #{{- . -}}
-      </a>&nbsp;
+      {{ with $.Site.GetPage (printf "/tags/%s" . ) }}
+          <a class="terms-title" href="{{ .Permalink }}">
+            #{{ .Title }}
+          </a>&nbsp;
+      {{ end }}
     {{ end }}
   </span>
 
