@@ -1,6 +1,7 @@
 ---
 title: Hopcroft-Karp Algorithm
 date: 2021-04-21
+tags: [algorithm]
 ---
 
 Hopcroft-Karp algorithm は、二部グラフの最大マッチングを $O(\sqrt{|V|} \cdot (|V| + |E|))$ で求めるアルゴリズムである。

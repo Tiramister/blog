@@ -1,6 +1,7 @@
 ---
 title: Cooley-Tukey Algorithm
 date: 2021-03-05
+tags: [algorithm]
 ---
 
 $n$ 次多項式 $f(x) = \sum\_{p=0}^{n-1} a\_p x^p$ から、以下で定義される $n$ 次多項式 $\hat{f}$ への写像を **離散 Fourier(フーリエ)変換** という。ここで $\omega\_n$ は $1$ の原始 $n$ 乗根。

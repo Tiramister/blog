@@ -1,6 +1,6 @@
 ---
 title: "キーエンス プログラミング コンテスト 2019 F - Paper Cutting"
-date: 2020-09-26
+date: 2020-09-06
 tags: [atcoder]
 links:
   - label: "Problem link"

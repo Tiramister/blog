@@ -5,8 +5,6 @@ tags: [yukicoder]
 links:
   - label: Problem link
     url: https://yukicoder.me/problems/no/1302
-  - label: 参考記事
-    url: https://37zigen.com/prufer-code/
   - label: My Submission
     url: https://yukicoder.me/submissions/586123
 ---
@@ -29,7 +27,7 @@ $$
 (N-2)! \\prod\_v \\frac\{1\}\{(d\_v - 1)!\}
 $$
 
-これは「Prüfer コード」を使うと求められる (参考記事を参照)。
+これは「Prüfer コード」を使うと求められる ([参考記事](https://37zigen.com/prufer-code/))。
 ということで、スコアの平均は以下の式で求まる。
 
 $$
