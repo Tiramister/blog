@@ -1,0 +1,13 @@
+<div class="terms">
+  <h1>{{ .Title }}</h1>
+  <ul>
+    {{ $type := .Type }}
+    {{ range .Data.Terms.Alphabetical }}
+      <li>
+        <a class="terms-title" href="{{ printf "%s/%s" $type .Name | absLangURL }}">
+          {{ .Name }} ({{ .Count }})
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+</div>

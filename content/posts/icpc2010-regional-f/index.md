@@ -1,7 +1,7 @@
 ---
 title: ICPC 地区予選 2010 F - Test Case Tweaking
 date: 2020-11-14
-tags: [ipcp]
+tags: [icpc]
 links:
   - label: Problem link
     url: https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Regional/1311?year=2010
@@ -30,7 +30,9 @@ $N$ 頂点 $M$ 辺の重み付き有向グラフが与えられる。
 
 まず、問題は以下のように言い換えられる。
 
-> いくつかの辺を選んでその重みを $0$ にできるとき、頂点 $1$ から $N$ までの最短距離を $C$ 以下にするには最低何本の辺を選べばよいか。
+{{<framed>}}
+いくつかの辺を選んでその重みを $0$ にできるとき、頂点 $1$ から $N$ までの最短距離を $C$ 以下にするには最低何本の辺を選べばよいか。
+{{</framed>}}
 
 $C$ を下回った分だけ、選んだ辺の重みを適当に増やしてやればいい。
 

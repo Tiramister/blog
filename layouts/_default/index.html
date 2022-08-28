@@ -1,0 +1,12 @@
+{{ define "main" }}
+  <div class="index-content framed">
+    {{ partial "terms.html" (.GetPage "tags") }}
+  </div>
+
+  <div class="posts">
+    {{ range (.Paginate .Site.RegularPages.ByDate.Reverse).Pages }}
+      {{ partial "page_summary.html" . }}
+    {{ end }}
+    {{ partial "pagination.html" . }}
+  </div>
+{{ end }}

@@ -1,0 +1,31 @@
+<div class="post on-list">
+  <h1 class="post-title">
+    <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+  </h1>
+  <div class="post-meta">
+    <span class="post-date">
+      {{ .PublishDate.Format "2006-01-02" }}
+      {{ with .Lastmod }}
+        [Updated: {{ .Format "2006-01-02" }}]
+      {{ end }}
+    </span>
+  </div>
+
+  <span class="post-tags">
+    {{ range .Params.tags }}
+      <a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
+        #{{- . -}}
+      </a>&nbsp;
+    {{ end }}
+  </span>
+
+  {{ partial "cover.html" . }}
+
+  <div class="post-content">
+    {{- .Summary | markdownify -}}
+    {{ if .Truncated }}...{{ end }}
+  </div>
+  <div>
+    <a class="read-more button" href="{{ .RelPermalink }}">{{ $.Site.Params.ReadMore }} →</a>
+  </div>
+</div>

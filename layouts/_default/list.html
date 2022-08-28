@@ -1,4 +1,5 @@
 {{ define "main" }}
+  <h1>{{ .Title }}</h1>
   {{ if .Content }}
     <div class="index-content framed">
       <h2>{{ .Title }}</h2>
@@ -6,52 +7,10 @@
     </div>
   {{ end }}
 
-  {{ if gt (len .Sections) 0 }}
-    <dl>
-      {{ range .Sections }}
-        <dt><a href="{{ .Permalink }}">{{ .Title }}</a></dt>
-        <dd>{{ .Content }}</dd>
-      {{ end }}
-    </dl>
-  {{ end }}
-
   <div class="posts">
-    {{ $subpages := cond .IsHome .Site.RegularPages .RegularPagesRecursive }}
-    {{ range (.Paginate $subpages.ByDate.Reverse).Pages }}
-      <div class="post on-list">
-        <h1 class="post-title">
-          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
-        </h1>
-        <div class="post-meta">
-          <span class="post-date">
-            {{ .PublishDate.Format "2006-01-02" }}
-            {{ with .Lastmod }}
-              [Updated: {{ .Format "2006-01-02" }}]
-            {{ end }}
-          </span>
-        </div>
-
-        <span class="post-tags">
-          <a href="{{ .CurrentSection.Permalink }}">📁 {{ .CurrentSection.Title }}</a>&nbsp;
-          {{ range .Params.tags }}
-            <a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-              #{{- . -}}
-            </a>&nbsp;
-          {{ end }}
-        </span>
-
-        {{ partial "cover.html" . }}
-
-        <div class="post-content">
-          {{- .Summary | markdownify -}}
-          {{ if .Truncated }}...{{ end }}
-        </div>
-        <div>
-          <a class="read-more button" href="{{.RelPermalink}}">{{ $.Site.Params.ReadMore }} →</a>
-        </div>
-      </div>
+    {{ range (.Paginate .RegularPagesRecursive.ByDate.Reverse).Pages }}
+      {{ partial "page_summary.html" . }}
     {{ end }}
-
     {{ partial "pagination.html" . }}
   </div>
 {{ end }}
