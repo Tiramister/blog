@@ -1,10 +1,7 @@
 import re
 import sys
+import requests
 from typing import Callable, Optional, Match
-
-
-def eprint(text: str) -> None:
-    print(text, file=sys.stderr)
 
 
 class PatternType:
@@ -60,11 +57,13 @@ def set_tags(tags: str) -> str:
     return ""
 
 
+resource_id: int = 0
+
+
 def save_code(language: str, code: str) -> str:
-    if not hasattr(save_code, "id"):
-        save_code.id = 0
-    id: int = save_code.id
-    save_code.id += 1
+    global resource_id
+    id: int = resource_id
+    resource_id += 1
 
     if not language:
         language = "txt"
@@ -76,6 +75,28 @@ def save_code(language: str, code: str) -> str:
     return f'{{{{<code file="{filename}" language="{language}">}}}}'
 
 
+def fetch_image(alt: str, src: str) -> str:
+    global resource_id
+    id: int = resource_id
+    resource_id += 1
+
+    ext = src.split('.')[-1]
+    filename = f"{id}.{ext}"
+
+    if src.startswith("http"):
+        # 画像のダウンロード
+        response = requests.get(src)
+        if response.status_code != 200:
+            print(f'Failed to fetch {src}', file=sys.stderr)
+        elif 'image' not in response.headers['content-type']:
+            print(f'Response of {src} is not an image', file=sys.stderr)
+        else:
+            with open(filename, 'wb') as f:
+                f.write(response.content)
+
+    return f'{{{{<image src="{id}.{ext}" alt="{alt}">}}}}'
+
+
 def escapse_equation(equation: str) -> str:
     # バックスラッシュ
     equation = re.sub(r'\\', r'\\\\\\\\', equation)
@@ -84,10 +105,6 @@ def escapse_equation(equation: str) -> str:
     # align -> aligned
     equation = re.sub(r'\{align\}', '{aligned}', equation)
     return insert_spaces(equation)
-
-
-def replace_image(alt: str) -> str:
-    return f'{{{{<image src="" alt="{alt}">}}}}'
 
 
 def replace_link(label: str, url: str) -> str:
@@ -120,8 +137,8 @@ pattern_types: list[PatternType] = [
     PatternType(r'\$(?:.|\s)*?\$',
                 lambda match: escapse_equation(match.group())),
     # 画像
-    PatternType(r'!\[([^\[\]]*?)\]\(.*?\)',
-                lambda match: replace_image(match.group(1))),
+    PatternType(r'!\[([^\[\]]*?)\]\((.*?)\)',
+                lambda match: fetch_image(match.group(1), match.group(2))),
     # リンク
     PatternType(r'\[([^\[\]]*?)\]\((http.*?)\)',
                 lambda match: replace_link(match.group(1), match.group(2))),
