@@ -1,5 +1,0 @@
-<prog>       ::= <if-expr> | <while-expr> | <move-expr>
-<if-expr>    ::= [<cond><prog>]
-<while-expr> ::= {<cond><prog>}
-<cond>       ::= ~<cond> | N | E | S | W | C | T
-<move-expr>  ::= ^ | v | < | >
