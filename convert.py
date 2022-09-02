@@ -164,7 +164,8 @@ for pattern_type in pattern_types:
         text = pattern_type.subst(text, f'<{len(new_texts)}>')
         new_texts.append(new_text)
 
-for id, new_text in enumerate(new_texts):
+# 置換と逆の順番で展開
+for id, new_text in reversed(list(enumerate(new_texts))):
     text = re.sub(f'<{id}>', new_text, text)
 
 print(FrontMatter.to_string())
