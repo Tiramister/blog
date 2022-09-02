@@ -1,10 +1,16 @@
 {{ define "main" }}
-  <div class="index-content framed">
-    {{ partial "terms.html" (.GetPage "tags") }}
-  </div>
+  {{ $paginate := .Paginate .Site.RegularPages.ByDate.Reverse }}
+  {{ if eq $paginate.PageNumber 1 }}
+    <div class="index-content framed">
+      {{ partial "terms.html" (.GetPage "tags") }}
+    </div>
+  {{ end }}
+
+  <h2>{{ $paginate.PageNumber }} / {{ $paginate.TotalPages }} Pages</h2>
 
   <div class="posts">
-    {{ range (.Paginate .Site.RegularPages.ByDate.Reverse).Pages }}
+    {{ partial "pagination.html" . }}
+    {{ range $paginate.Pages }}
       {{ partial "page_summary.html" . }}
     {{ end }}
     {{ partial "pagination.html" . }}

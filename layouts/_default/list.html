@@ -1,13 +1,17 @@
 {{ define "main" }}
-  {{ if .Content }}
+  {{ $paginate := .Paginate .RegularPagesRecursive.ByDate.Reverse }}
+  {{ if and .Content (eq $paginate.PageNumber 1) }}
     <div class="index-content framed">
       <h2>{{ .Title }}</h2>
       {{ .Content }}
     </div>
   {{ end }}
 
+  <h2>{{ $paginate.PageNumber }} / {{ $paginate.TotalPages }} Pages</h2>
+
   <div class="posts">
-    {{ range (.Paginate .RegularPagesRecursive.ByDate.Reverse).Pages }}
+    {{ partial "pagination.html" . }}
+    {{ range $paginate.Pages }}
       {{ partial "page_summary.html" . }}
     {{ end }}
     {{ partial "pagination.html" . }}
