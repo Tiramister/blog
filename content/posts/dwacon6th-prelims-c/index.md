@@ -1,5 +1,5 @@
 ---
-title: "第 6 回 ドワンゴからの挑戦状 予選 C - Cookie Distribution (800)"
+title: "第 6 回 ドワンゴからの挑戦状 予選 C - Cookie Distribution"
 date: 2020-01-12
 tags: [atcoder]
 links:
