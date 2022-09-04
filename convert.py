@@ -140,7 +140,7 @@ pattern_types: list[PatternType] = [
     PatternType(r'!\[([^\[\]]*?)\]\((.*?)\)',
                 lambda match: fetch_image(match.group(1), match.group(2))),
     # リンク
-    PatternType(r'\[([^\[\]]*?)\]\((http.*?)\)',
+    PatternType(r'\[([^\[\]]*?)\]\((.*?)\)',
                 lambda match: replace_link(match.group(1), match.group(2))),
     # 太字 + 斜体
     PatternType(r'\*\*\*.*?\*\*\*',
