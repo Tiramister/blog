@@ -1,0 +1,3 @@
+expr ::= term | -expr | (bin)
+bin  ::= expr*expr | expr^expr
+term ::= 0 | 1 | a | b | c | d
