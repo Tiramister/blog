@@ -22,9 +22,9 @@ pre {
 }
 
 /* collapse */
-details div.content {
+div.summary--content {
   border: 1px solid silver;
-  padding: 20px;
+  padding: 0px 20px;
 }
 
 details summary:hover {
