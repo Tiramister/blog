@@ -202,13 +202,12 @@ def format(text: str) -> str:
         CodeBlockPattern(),
         ImagePattern(),
         EquationPattern(r'(?s)\$\$.*?\$\$'),  # 複数行数式
-        EquationPattern(r'(?m)\s?\$.*?\$\s?'),  # インライン数式
+        EquationPattern(r'[ ]?\$.*?\$[ ]?'),  # インライン数式
         LinkPattern(front_matter),
-        WrapBySpacePattern(r'(?m)\s?`.*?`\s?'),   # インラインコード
-        WrapBySpacePattern(r'(?m)\s?\*\*\*.*?\*\*\*\s?'),  # 太字 + 斜体
-        WrapBySpacePattern(r'(?m)\s?\*\*.*?\*\*\s?'),   # 太字
-        WrapBySpacePattern(r'(?m)\s?\*.*?\*\s?'),   # 斜体
-        WrapBySpacePattern(r'(?m)\s?-.*?-\s?'),   # 斜体
+        WrapBySpacePattern(r'[ ]?`.*?`[ ]?'),   # インラインコード
+        WrapBySpacePattern(r'[ ]?\*\*_.*?_\*\*[ ]?'),  # 太字 + 斜体
+        WrapBySpacePattern(r'[ ]?\*\*.*?\*\*[ ]?'),   # 太字
+        WrapBySpacePattern(r'[ ]?_.*?_[ ]?'),   # 斜体
     ]
 
     # <id> で置換
