@@ -12,5 +12,7 @@
   <img src="{{ $image.Permalink }}"
     {{ with .Get "alt" }}alt="{{ . | plainify }}"{{ end }}
     class="{{- default "center" (.Get "position") }}"
+    width="{{ default "100%" (.Get "width") }}"
+    height="{{ default "auto" (.Get "height") }}"
     {{ with .Get "style" }}style="{{ . | safeCSS }}"{{ end }} />
 {{ end }}
