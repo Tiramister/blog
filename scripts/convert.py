@@ -113,7 +113,7 @@ class ImagePattern(IPattern):
         self.__image_id: int = 0
 
     def get_pattern(self) -> str:
-        return r'\s?!\[(?P<alt>[^\[\]]*?)\]\((?P<src>.*?)\)\s?'
+        return r'[ ]?!\[(?P<alt>[^\[\]]*?)\]\((?P<src>.*?)\)[ ]?'
 
     def process(self, match: Match) -> str:
         id: int = self.__image_id
@@ -136,7 +136,12 @@ class ImagePattern(IPattern):
                 with open(filename, 'wb') as f:
                     f.write(response.content)
 
-        return f'{{{{<image src="{id}.{ext}" alt="{alt}">}}}}'
+        props: list[str] = []
+        props.append(f'src="{filename}"')
+        if len(alt) != 0:
+            props.append(f'alt="{alt}"')
+
+        return f'{{{{<image {" ".join(props)}>}}}}'
 
 
 # FrontMatter に対して操作を行うようなパターン
