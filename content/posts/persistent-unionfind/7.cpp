@@ -16,8 +16,7 @@ public:
             par[i] = i;
         }
         fill(rank, rank + V_NUM, 0);
-        fill(time, time + V_NUM, INF);
-            // 自身が根の間は便宜上INFとする
+        fill(time, time + V_NUM, INF); // 自身が根の間は便宜上INFとする
     }
 
     // 時刻tにおけるxの親を返す
@@ -35,13 +34,14 @@ public:
     }
 
     // 頂点xとyを繋げる
-    void unite(int x, int y) {
+    // 繋げた直後の時刻を返す
+    int unite(int x, int y) {
         ++now; // 時間を進める
 
         x = find(x, now);
         y = find(y, now);
 
-        if (x == y) return;
+        if (x == y) return now;
 
         // rank[x] >= rank[y]にする
         if (rank[x] < rank[y]) swap(x, y);
@@ -50,5 +50,7 @@ public:
         par[y] = x;
         time[y] = now; // timeに時刻を記録
         if (rank[x] == rank[y]) ++rank[x];
+
+        return now;
     }
 };

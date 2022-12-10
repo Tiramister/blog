@@ -6,12 +6,12 @@
         int ok = 0, ng = num[x].size();
         while (ng - ok > 1) {
             int mid = (ok + ng) / 2;
-            if (num[mid].first <= t) {
+            if (num[x][mid].first <= t) {
                 ok = mid;
             } else {
                 ng = mid;
             }
         }
 
-        return num[ok].second;
+        return num[x][ok].second;
     }

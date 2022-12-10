@@ -12,7 +12,6 @@
 
         // rankの大きい方、つまりxにyをくっつける
         par[y] = x;
-        time[y] = now;
-            // yの親がxに更新されたので、timeに時刻を記録
+        time[y] = now; // yの親がxに更新されたので、timeに時刻を記録
         if (rank[x] == rank[y]) ++rank[x];
     }

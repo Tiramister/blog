@@ -9,19 +9,16 @@ public:
     int par[V_NUM];  // 各頂点の親
     int rank[V_NUM]; // その頂点を根とする木の深さ
     int time[V_NUM]; // 親がいつ更新されたか
-    vector<pair<int, int>> num[V_NUM];
-        // (時刻, 頂点数)を要素にもつvector
+    vector<pair<int, int>> num[V_NUM]; // (時刻, 頂点数)を要素にもつvector
 
     explicit persistentUF() {
         now = 0;
         for (int i = 0; i < V_NUM; ++i) {
             par[i] = i;
-            num[i].push_back(make_pair(0, 1));
-                // 時刻0にて頂点数は1
+            num[i].push_back(make_pair(0, 1)); // 時刻0にて頂点数は1
         }
         fill(rank, rank + V_NUM, 0);
-        fill(time, time + V_NUM, INF);
-            // 自身が根の間は便宜上INFとする
+        fill(time, time + V_NUM, INF); // 自身が根の間は便宜上INFとする
     }
 
     // 時刻tにおけるxの親を返す
@@ -39,13 +36,13 @@ public:
     }
 
     // 頂点xとyを繋げる
-    void unite(int x, int y) {
+    int unite(int x, int y) {
         ++now; // 時間を進める
 
         x = find(x, now);
         y = find(y, now);
 
-        if (x == y) return;
+        if (x == y) return now;
 
         // rank[x] >= rank[y]にする
         if (rank[x] < rank[y]) swap(x, y);
@@ -67,13 +64,13 @@ public:
         int ok = 0, ng = num[x].size();
         while (ng - ok > 1) {
             int mid = (ok + ng) / 2;
-            if (num[mid].first <= t) {
+            if (num[x][mid].first <= t) {
                 ok = mid;
             } else {
                 ng = mid;
             }
         }
 
-        return num[ok].second;
+        return num[x][ok].second;
     }
 };
