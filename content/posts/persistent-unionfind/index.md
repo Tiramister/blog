@@ -1,7 +1,7 @@
 ---
 title: "部分永続 UnionFind の実装"
 date: 2018-09-13
-tags: [atcoder]
+tags: [algorithm]
 links:
 ---
 
