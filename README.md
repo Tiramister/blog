@@ -7,6 +7,9 @@
 ## コマンド
 
 ```sh
+# 記事を作成
+hugo new content/posts/{dir-name}/index.md
+
 # サーバーを立てる。
 # localhost:1313/blog/ でアクセスできる。
 # -D で draft も見られるようになる。
