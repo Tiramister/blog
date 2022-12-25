@@ -3,7 +3,7 @@ name: Deploy to Amazon S3
 on:
   push:
     branches:
-      - "main"
+      - main
 
 jobs:
   deploy:
@@ -14,13 +14,13 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Update Submodules
+      - name: Update submodules
         run: git submodule update --remote --recursive
 
-      - name: Setup Hugo
+      - name: Setup hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: "latest"
+          hugo-version: latest
           extended: true
 
       - name: Build
