@@ -1,3 +1,0 @@
-[alias]
-conv = "run --bin convert"
-inv = "run --bin invert"
