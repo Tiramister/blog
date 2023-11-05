@@ -2,12 +2,9 @@
 title: AtCoder Grand Contest 046 C - Shift
 date: 2020-11-28
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/agc046/tasks/agc046_c
-  - label: My Submission
-    url: https://atcoder.jp/contests/agc046/submissions/18440335
 ---
+
+[C - Shift](https://atcoder.jp/contests/agc046/tasks/agc046_c)
 
 ## 問題
 
@@ -48,8 +45,72 @@ $0, 1$ からなる長さ $N$ の文字列 $S$ が与えられる。 $S$ に以�
 - 今残っている前借りの数
 - 前借りの合計回数(つまり操作回数)
 
-「 $T$ の今見ている値」は、 $S\_i = 1, T\_j = 0$ のときに $j$ が進まないので必要となる。
+「$T$ の今見ている値」は、 $S\_i = 1, T\_j = 0$ のときに $j$ が進まないので必要となる。
 
 ## 実装例
 
-{{<code file="main.cpp" language="cpp">}}
+[提出 #18440335 - AtCoder Grand Contest 046](https://atcoder.jp/contests/agc046/submissions/18440335)
+
+```cpp
+#include <atcoder/modint>
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+using mint = atcoder::modint998244353;
+
+void solve() {
+    string s;
+    int m;
+    cin >> s >> m;
+    int n = s.length();
+
+    auto dp = vector(2, vector(n + 1, vector(n + 1, vector(n + 1, mint(0)))));
+    // Tの次の文字, Sの今見てるindex, 1の前借り数, 操作回数
+    dp[0][0][0][0] = dp[1][0][0][0] = 1;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j <= n; ++j) {
+            for (int k = 0; k <= n; ++k) {
+                if (s[i] == '0') {
+                    // 0-0: スキップ
+                    if (i < n) {
+                        for (int nc = 0; nc < 2; ++nc) {
+                            dp[nc][i + 1][j][k] += dp[0][i][j][k];
+                        }
+                    }
+
+                    // 0-1: 1を貰う
+                    if (j < n && k < n) {
+                        for (int nc = 0; nc < 2; ++nc) {
+                            dp[nc][i][j + 1][k + 1] += dp[1][i][j][k];
+                        }
+                    }
+                } else {
+                    // 1-0: 1を消す
+                    // このときだけ相手の文字は0のまま
+                    if (i < n && j > 0) {
+                        dp[0][i + 1][j - 1][k] += dp[0][i][j][k];
+                    }
+
+                    // 1-1: スキップ
+                    if (i < n) {
+                        for (int nc = 0; nc < 2; ++nc) {
+                            dp[nc][i + 1][j][k] += dp[1][i][j][k];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    mint ans = 0;
+    for (int k = 0; k <= n && k <= m; ++k) {
+        ans += dp[0][n][0][k];
+    }
+    cout << ans.val() << "\n";
+}
+```
+

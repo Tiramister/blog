@@ -2,12 +2,9 @@
 title: "AtCoder Regular Contest 053 C - 魔法使い高橋君"
 date: 2019-10-30
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/arc053/tasks/arc053_c
-  - label: My Submission
-    url: https://atcoder.jp/contests/arc053/submissions/8218670
 ---
+
+[C - 魔法使い高橋君](https://atcoder.jp/contests/arc053/tasks/arc053_c)
 
 ## 問題
 
@@ -31,10 +28,8 @@ $n$ 個の気温を変える魔法があり， $i$ 番目の魔法は「気温�
 $$
 \\begin\{aligned\}
 \\max(a\_i, a\_i - b\_i + a\_\{i + 1\})
-&\\geq \\max(a\_i, a\_\{i + 1\})
-& (\\because a\_i - b\_i \\geq 0) \\\\
+&\\geq \\max(a\_i, a\_\{i + 1\}) \\\\
 &\\geq \\max(a\_\{i + 1\} - b\_\{i + 1\} + a\_i, a\_\{i + 1\})
-& (\\because a\_\{i + 1\} - b\_\{i + 1\} < 0)
 \\end\{aligned\}
 $$
 
@@ -59,4 +54,45 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #8218670 - AtCoder Regular Contest 053](https://atcoder.jp/contests/arc053/submissions/8218670)
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using lint = long long;
+
+int main() {
+    int n;
+    std::cin >> n;
+    std::vector<std::pair<lint, lint>> ps(n);
+    for (auto& p : ps) {
+        std::cin >> p.first >> p.second;
+    }
+
+    std::sort(ps.begin(), ps.end(),
+              [](auto a, auto b) {
+                  bool aneg = a.first < a.second,
+                       bneg = b.first < b.second;
+                  if (aneg != bneg) {
+                      return aneg > bneg;
+                  } else if (aneg) {
+                      return a.first < b.first;
+                  } else {
+                      return a.second > b.second;
+                  }
+              });
+
+    lint ans = 0, sum = 0;
+    for (auto p : ps) {
+        sum += p.first;
+        ans = std::max(ans, sum);
+        sum -= p.second;
+    }
+
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
+

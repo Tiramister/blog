@@ -2,12 +2,9 @@
 title: "Typical DP Contest I - イウィ"
 date: 2020-01-23
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/tdpc/tasks/tdpc_iwi
-  - label: My Submission
-    url: https://atcoder.jp/contests/tdpc/submissions/9675043
 ---
+
+[I - イウィ](https://atcoder.jp/contests/tdpc/tasks/tdpc_iwi)
 
 ## 問題
 
@@ -46,4 +43,55 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #9675043 - Typical DP Contest](https://atcoder.jp/contests/tdpc/submissions/9675043)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+template <class T>
+std::vector<T> vec(int len, T elem) { return std::vector<T>(len, elem); }
+
+void solve() {
+    std::string s;
+    std::cin >> s;
+    int n = s.length();
+
+    auto dp = vec(n, vec(n, 0));
+    auto clean = vec(n, vec(n, false));
+    for (int i = 1; i < n; ++i) {
+        clean[i][i - 1] = true;
+    }
+
+    for (int l = 0; l < n; ++l) {
+        for (int i = 0; i + l < n; ++i) {
+            int j = i + l;
+
+            // clean check
+            // create iwi
+            if (s[i] == 'i' && s[j] == 'i') {
+                for (int k = i + 1; k <= j - 1; ++k) {
+                    if (s[k] == 'w' &&
+                        clean[i + 1][k - 1] && clean[k + 1][j - 1]) {
+                        clean[i][j] = true;
+                    }
+                }
+            }
+            // separate
+            for (int k = i; k + 1 <= j; ++k) {
+                if (clean[i][k] && clean[k + 1][j]) clean[i][j] = true;
+            }
+
+            if (clean[i][j]) dp[i][j] = (l + 1) / 3;
+
+            for (int k = i; k + 1 <= j; ++k) {
+                dp[i][j] = std::max(dp[i][j], dp[i][k] + dp[k + 1][j]);
+            }
+        }
+    }
+
+    std::cout << dp[0][n - 1] << std::endl;
+}
+```
+

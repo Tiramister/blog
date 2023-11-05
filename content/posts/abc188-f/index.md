@@ -2,12 +2,9 @@
 title: AtCoder Beginner Contest 188 F - +1-1x2
 date: 2021-01-11
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/abc188/tasks/abc188_f
-  - label: My Submission
-    url: https://atcoder.jp/contests/abc188/submissions/19376744
 ---
+
+[F - +1-1x2](https://atcoder.jp/contests/abc188/tasks/abc188_f)
 
 ## 問題
 
@@ -53,4 +50,41 @@ $$
 
 $1 \\xrightarrow\{+1\} 2 \\xrightarrow\{\\div2\} 1$ の無限ループに注意。
 
-{{<code file="main.cpp" language="cpp">}}
+[提出 #19376744 - AtCoder Beginner Contest 188](https://atcoder.jp/contests/abc188/submissions/19376744)
+
+```cpp
+#include <iostream>
+#include <map>
+
+using namespace std;
+using lint = long long;
+
+void solve() {
+    lint x, y;
+    cin >> x >> y;
+
+    map<lint, lint> dp;
+    auto dfs = [&](auto&& f, lint p) -> lint {
+        if (dp.count(p)) return dp[p];
+
+        auto& ret = dp[p];
+
+        // 2で割らない場合
+        ret = abs(p - x);
+
+        // 2で割る場合
+        for (int d = -1; d <= 1; ++d) {
+            lint np = p + d;
+            if (np < 0 || np % 2 != 0 ||
+                np / 2 >= p) continue;
+            // 最後の条件は無限ループを省くのに必要
+
+            ret = min(ret, f(f, np / 2) + abs(d) + 1);
+        }
+        return ret;
+    };
+
+    cout << dfs(dfs, y) << "\n";
+}
+```
+

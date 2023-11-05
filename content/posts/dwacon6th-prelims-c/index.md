@@ -2,19 +2,16 @@
 title: "第 6 回 ドワンゴからの挑戦状 予選 C - Cookie Distribution"
 date: 2020-01-12
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/dwacon6th-prelims/tasks/dwacon6th_prelims_c
-  - label: My Submission
-    url: https://atcoder.jp/contests/dwacon6th-prelims/submissions/9427889
 ---
+
+[C - Cookie Distribution](https://atcoder.jp/contests/dwacon6th-prelims/tasks/dwacon6th_prelims_c)
 
 ## 問題
 
 $n$ 人の子供に， $k$ 日に渡って飴を配る．
 $i$ 日目には，各子供が高々 1 つの飴を貰うように，合計 $a\_i$ 個の飴を配る．
 
-最終的に $j$ 番目の子供が合計 $c\_j$ 個の飴を貰ったとき， $\\prod c\_j$ を _嬉しさ_ と定義する．
+最終的に $j$ 番目の子供が合計 $c\_j$ 個の飴を貰ったとき， $\\prod c\_j$ を「嬉しさ」と定義する．
 
 全ての配り方 $\\prod \\binom\{n\}\{a\_i\}$ 通りについて嬉しさを求めたとき，その合計を求めよ．
 
@@ -79,4 +76,46 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #9427889 - 第6回 ドワンゴからの挑戦状 予選](https://atcoder.jp/contests/dwacon6th-prelims/submissions/9427889)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+template <int MOD>
+struct ModInt { ... };
+
+constexpr int MOD = 1e9 + 7;
+using mint = ModInt<MOD>;
+
+template <class T>
+struct Combination { ... };
+
+const Combination<mint> C(10000);
+
+template <class T>
+std::vector<T> vec(int len, T elem) { return std::vector<T>(len, elem); }
+
+
+int main() {
+    int n, k;
+    std::cin >> n >> k;
+
+    std::vector<int> xs(k);
+    for (auto& x : xs) std::cin >> x;
+
+    auto dp = vec(k + 1, vec(n + 1, mint(0)));
+    dp[k][0] = 1;
+    for (int d = k - 1; d >= 0; --d) {
+        for (int m = n; m >= 0; --m) {
+            for (int l = 0; l <= m; ++l) {
+                dp[d][m] += dp[d + 1][m - l] * C.comb(m, l) * C.comb(n - l, xs[d] - l);
+            }
+        }
+    }
+
+    std::cout << dp[0][n] << std::endl;
+    return 0;
+}
+```
+

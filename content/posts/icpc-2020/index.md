@@ -2,12 +2,11 @@
 title: ICPC 国内予選 2020 参加記
 date: 2020-11-07
 tags: [icpc]
-links:
-  - label: ICPC コンテストページ
-    url: https://icpc.iisf.or.jp/2020-yokohama/domestic/
-  - label: AOJ 問題ページ
-    url: https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim?year=2020
 ---
+
+[国内予選 | ICPC 2020 Asia Yokohama Regional](https://icpc.iisf.or.jp/2020-yokohama/domestic/)
+
+[ICPC Prelim < Challenges | Aizu Online Judge](https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim?year=2020)
 
 ## 結果
 
@@ -72,3 +71,4 @@ F が通った時点で残り 15 分ほどしかなく、さかなの E のデ�
 - F が通せて本当によかった。
   - ちなみに後 8 分遅かったらボーダー落ちしてた。
 - しかし E 以降はまだまだ改善の余地があると感じた。アジアまでにもっと力を付けたいところ。
+

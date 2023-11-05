@@ -2,12 +2,9 @@
 title: AtCoder Regular Contest 084 E - Finite Encyclopedia of Integer Sequences
 date: 2020-11-28
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/arc084/tasks/arc084_c
-  - label: My Submission
-    url: https://atcoder.jp/contests/arc084/submissions/18417837
 ---
+
+[E - Finite Encyclopedia of Integer Sequences](https://atcoder.jp/contests/arc084/tasks/arc084_c)
 
 ## 問題
 
@@ -38,4 +35,41 @@ $\\lceil \\frac\{K\}\{2\} \\rceil$ 以外の要素を含む数列 $(A\_i)\_i$ �
 
 ## 実装例
 
-{{<code file="main.cpp" language="cpp">}}
+[提出 #18417837 - AtCoder Regular Contest 084](https://atcoder.jp/contests/arc084/submissions/18417837)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void solve() {
+    int k, n;
+    cin >> k >> n;
+
+    if (k % 2 == 0) {
+        cout << k / 2 << " ";
+        for (int i = 0; i < n - 1; ++i) cout << k << " ";
+        cout << "\n";
+
+    } else {
+        vector<int> ans(n, (k + 1) / 2);  // 真ん中からスタート
+        int front = n;                    // ansより前が後よりいくつ多いか
+
+        while (front > 1) {
+            // 1つ前に戻す
+            if (--ans.back() == 0) {
+                ans.pop_back();
+            } else {
+                // 後ろにkを補充
+                ans.resize(n, k);
+            }
+            front -= 2;
+        }
+
+        for (auto x : ans) cout << x << " ";
+        cout << "\n";
+    }
+}
+```
+

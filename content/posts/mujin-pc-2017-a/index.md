@@ -2,12 +2,9 @@
 title: "Mujin Programming Challenge 2017 A - Robot Racing"
 date: 2019-11-14
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/mujin-pc-2017/tasks/mujin_pc_2017_a
-  - label: My Submission
-    url: https://atcoder.jp/contests/mujin-pc-2017/submissions/8425050
 ---
+
+[A - Robot Racing](https://atcoder.jp/contests/mujin-pc-2017/tasks/mujin_pc_2017_a)
 
 ## 問題
 
@@ -38,4 +35,42 @@ $n$ 個の石が数直線上に並んでいて，左から $i$ 番目の石は�
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #8425050 - Mujin Programming Challenge 2017](https://atcoder.jp/contests/mujin-pc-2017/submissions/8425050)
+
+```cpp
+#include <iostream>
+
+template <int MOD>
+struct ModInt { ... };
+
+constexpr int MOD = 1e9 + 7;
+using mint = ModInt<MOD>;
+
+int main() {
+    int n;
+    std::cin >> n;
+
+    mint ans = 1;
+    int cnt = 0;  // 今並んでいる石の数
+    for (int i = 0; i < n; ++i) {
+        int x;
+        std::cin >> x;
+
+        if (x < cnt * 2 + 1) {
+            // i番目の石も取り除けることに注意
+            ans *= (cnt + 1);
+            --cnt;
+        }
+        ++cnt;
+    }
+
+    while (cnt > 0) {
+        ans *= cnt;
+        --cnt;
+    }
+
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
+

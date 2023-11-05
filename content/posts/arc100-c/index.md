@@ -2,12 +2,9 @@
 title: "AtCoder Regular Contest 100 C - Linear Approximation"
 date: 2018-09-17
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/arc100/tasks/arc100_a
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/arc100/submissions/3213149
 ---
+
+[C - Linear Approximation](https://atcoder.jp/contests/arc100/tasks/arc100_a)
 
 ## 概要
 
@@ -76,12 +73,41 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3213149 - AtCoder Regular Contest 100](https://atcoder.jp/contests/arc100/submissions/3213149)
+
+```cpp
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+using ll = long long;
+
+int main() {
+    ll N;
+    cin >> N;
+    ll A[N];
+    for (int i = 0; i < N; ++i) {
+        cin >> A[i];
+        A[i] -= i + 1;
+    }
+
+    sort(A, A + N);
+    ll b = A[N / 2];
+
+    ll ans = 0;
+    for (int i = 0; i < N; ++i) {
+        ans += abs(A[i] - b);
+    }
+
+    cout << ans << endl;
+    return 0;
+}
+```
 
 ## 別解 1: 三分探索
 
 先に上げた表を基準に $s(b)$ のグラフを書いてみると、これは下に凸のグラフになっていることが分かる。
-こういった「凸性があるグラフの極値を求めたい」というときに使えるのが、「 **三分探索** 」というアルゴリズムである。
+こういった「凸性があるグラフの極値を求めたい」というときに使えるのが、「**三分探索**」というアルゴリズムである。
 ここでは詳しく解説しないが、興味がある方は調べてみるといいだろう。
 
 この解法の計算量は $O(N \\log N)$ となる。
@@ -95,3 +121,4 @@ s(B\_k) = ((sum\_N - sum\_k) - (N - k)B\_k) + ((k - 1)B\_k - sum\_\{k - 1\})
 $$
 
 となる。なお $sum\_i = B\_1 + \\dots + B\_i$ とする。
+

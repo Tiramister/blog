@@ -2,12 +2,9 @@
 title: "Educational Codeforces Round 79 F - New Year and Handle Change"
 date: 2020-01-08
 tags: [codeforces]
-links:
-  - label: Problem link
-    url: https://codeforces.com/contest/1279/problem/F
-  - label: My Submission
-    url: https://codeforces.com/contest/1279/submission/68388249
 ---
+
+[Problem - F - Codeforces](https://codeforces.com/contest/1279/problem/F)
 
 ## 問題
 
@@ -49,4 +46,87 @@ $s$ を小さくすることにしてしまえば，極力多くの要素を $0$
 
 としている．また，ペナルティ 0 で操作回数が $k$ 回以下の場合はそれがそのまま答えになることに注意．
 
-{{<code file="0.cpp" language="cpp">}}
+[Submission #68388249 - Codeforces](https://codeforces.com/contest/1279/submission/68388249)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <tuple>
+
+using ldouble = long double;
+constexpr int INF = 1 << 30;
+
+int main() {
+    int n, l, k;
+    std::cin >> n >> k >> l;
+
+    std::vector<int> xs(n);
+    for (auto& x : xs) {
+        char c;
+        std::cin >> c;
+        x = (std::islower(c) ? 1 : 0);
+    }
+    xs.insert(xs.begin(), 0);
+
+    // penaltyを固定したときの，最小コストとパス回数の最小値
+    auto calc = [&](ldouble pena) {
+        static std::vector<std::pair<ldouble, int>> dp(n + l + 1);
+        dp[0] = std::make_pair(0, 0);
+
+        for (int i = 1; i <= n + l; ++i) {
+            ldouble pdist;
+            int cnt;
+            std::tie(pdist, cnt) = dp[i - 1];
+            if (i <= n) pdist += xs[i];
+            dp[i] = std::make_pair(pdist, cnt);
+
+            if (i >= l) {
+                std::tie(pdist, cnt) = dp[i - l];
+                ++cnt;
+                auto nxt = std::make_pair(pdist + pena, cnt);
+                dp[i] = std::min(dp[i], nxt);
+            }
+        }
+        return dp.back();
+    };
+
+    int ans = INF;
+    for (int i = 0; i < 2; ++i) {
+        ldouble pena = 0;
+
+        {
+            int cnt;
+            std::tie(std::ignore, cnt) = calc(pena);
+
+            // pena=0でk回も使わないならそれが最適
+            if (cnt > k) {
+                ldouble ok = 1e9, ng = 0;
+                // pena >= ok -> used <= k
+
+                for (int q = 0; q < 100; ++q) {
+                    ldouble mid = (ok + ng) / 2;
+                    int pcnt;
+                    std::tie(std::ignore, pcnt) = calc(mid);
+                    (pcnt <= k ? ok : ng) = mid;
+                }
+                pena = ok;
+            }
+        }
+
+        ldouble cost;
+        std::tie(cost, std::ignore) = calc(pena);
+        cost -= k * pena;
+
+        int icost = cost + 1e-10;
+        ans = std::min(ans, icost);
+
+        // 全部反転してもう1回
+        for (auto& x : xs) x = 1 - x;
+    }
+
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
+

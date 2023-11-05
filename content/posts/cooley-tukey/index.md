@@ -101,7 +101,35 @@ $$
 
 このアルゴリズムを Python で一部だけ実装すると以下のようになる。現時点ではまだ再帰関数として実装されているので、これを次の節で非再帰関数に変形する。
 
-{{< code file="recursive.py" language="python" title="再帰 FFT" >}}
+```py
+# 数列, 開始地点, 長さ
+def fft(a, s, n):
+    # 基底ケース
+    if n == 1:
+        return
+ 
+    # a[s    : s+n/2] = b0[0: n/2]
+    # a[s+n/2: n    ] = b1[0: n/2]
+    # となるように変形
+    for p in range(0, n // 2):
+        l = a[s + p]
+        r = a[s + p + n // 2]
+        a[s + p] = l + r
+        a[s + p + n // 2] = (l - r) * omega(n, p)
+ 
+    # 再帰的にfftを適用
+    fft(a, s,          n // 2)
+    fft(a, s + n // 2, n // 2)
+
+    # 偶数番、奇数番が交互に並ぶように並び替える
+    tmp = [0] * n
+    for p in range(0, n // 2):
+        tmp[p * 2] = a[s + p]
+        tmp[p * 2 + 1] = a[s + p + n // 2]
+ 
+    for p in range(0, n):
+        a[s + p] = tmp[p]
+```
 
 ## 非再帰へ
 
@@ -127,13 +155,81 @@ $$
 
 これを踏まえて先程の実装を変更すると以下のようになる。これで ufft が末尾再帰となった。
 
-{{< code file="tail_recursive.py" language="python" title="末尾再帰 FFT" >}}
+```py
+# unordered FFT
+# 数列, 開始地点, 長さ
+def ufft(a, s, n):
+    # 基底ケース
+    if n == 1:
+        return
+ 
+    # a[s    : s+n/2] = b0[0: n/2]
+    # a[s+n/2: n    ] = b1[0: n/2]
+    # となるように変形
+    for p in range(0, n // 2):
+        l = a[s + p]
+        r = a[s + p + n // 2]
+        a[s + p] = l + r
+        a[s + p + n // 2] = (l - r) * omega(n, p * conj)
+ 
+    # 再帰的にfftを適用
+    ufft(a, s,          n // 2)
+    ufft(a, s + n // 2, n // 2)
+
+
+# iを長さkのbit列と見たとき、それを反転させたものを返す
+def rev(i, k):
+    j = 0
+    for _ in range(k):
+        j = (j << 1) + (i & 1)
+        i >>= 1
+    return j
+
+
+# FFT本体
+def fft(a):
+    n = len(a)
+
+    # n = 2^kなるkを求める
+    k = 0
+    while (1 << k) < n:
+        k += 1
+
+    ufft(a, 0, n)
+
+    # 適切に並び替える
+    for i in range(n):
+        j = rev(i, k)
+        if i < j:
+            swap(a[i], a[j])
+```
 
 ### 非再帰実装
 
 そしてこの ufft を非再帰で実装すると以下のようになる。
 
-{{< code file="non_recursive.py" language="python" title="非再帰 FFT" >}}
+```py
+# unordered FFT
+def ufft(a):
+    n = len(a)
+
+    # m: FFTを施したい数列(ブロック)の長さ
+    # 長さmのブロックがn/m個ある
+    m = n
+
+    while m > 1:
+        # ブロックのindex
+        for s in range(0, n // m):
+            # ブロック内のindex
+            for p in range(0, m // 2):
+                l = a[s * m + p]
+                r = a[s * m + p + m // 2]
+                a[s * m + p] = l + r
+                a[s * m + p + m // 2] = (l - r) * omega(m, p)
+
+        # 各ブロックを半分に分割
+        m //= 2
+```
 
 以下、上の実装の解説。
 
@@ -147,21 +243,21 @@ Cooley-Tukey のアルゴリズムは、大枠としては「長さ $n$ の数�
 
 これまでのアルゴリズムを遡ることで、逆 Fourier 変換も同様に実装できる。
 
-これまでのアルゴリズムでは、数列に対して以下の更新をしていた。$a'$が更新後の数列とする。
+これまでのアルゴリズムでは、数列に対して以下の更新をしていた。$a\'$が更新後の数列とする。
 
 $$
 \begin{aligned}
-a'\_p                 &= a\_p + a\_{p + \frac{n}{2}} \\\\
-a'\_{p + \frac{n}{2}} &= (a\_p - a\_{p + \frac{n}{2}}) \omega\_n^p \\\\
+a\'\_p                 &= a\_p + a\_{p + \frac{n}{2}} \\\\
+a\'\_{p + \frac{n}{2}} &= (a\_p - a\_{p + \frac{n}{2}}) \omega\_n^p \\\\
 \end{aligned}
 $$
 
-逆変換では更新後の値$a'\_p, a'\_{p + \frac{n}{2}}$から更新前の値$a\_p, a\_{p + \frac{n}{2}}$を得る必要があるが、上の等式を変形することで以下の更新式が得られる。
+逆変換では更新後の値$a\'\_p, a\'\_{p + \frac{n}{2}}$から更新前の値$a\_p, a\_{p + \frac{n}{2}}$を得る必要があるが、上の等式を変形することで以下の更新式が得られる。
 
 $$
 \begin{aligned}
-a\_p                 &= \frac{1}{2} (a'\_p + a'\_{p + \frac{n}{2}} \omega\_n^{-p}) \\\\
-a\_{p + \frac{n}{2}} &= \frac{1}{2} (a'\_p - a'\_{p + \frac{n}{2}} \omega\_n^{-p}) \\\\
+a\_p                 &= \frac{1}{2} (a\'\_p + a\'\_{p + \frac{n}{2}} \omega\_n^{-p}) \\\\
+a\_{p + \frac{n}{2}} &= \frac{1}{2} (a\'\_p - a\'\_{p + \frac{n}{2}} \omega\_n^{-p}) \\\\
 \end{aligned}
 $$
 
@@ -177,4 +273,49 @@ $$
 
 また fft と異なり、 ifft では iufft を呼び出す前に並び替えを行う。
 
-{{< code file="inverse.py" language="python" title="逆 FFT" >}}
+```py
+# unordered Inverse FFT
+def uifft(a):
+    n = len(a)
+
+    # m: IFFTを施したい数列(ブロック)の長さ
+    # 長さmのブロックがn/m個ある
+    m = 2
+
+    while m <= n:
+        # ブロックのindex
+        for s in range(0, n // m):
+            # ブロック内のindex
+            for p in range(0, m // 2):
+                l = a[s * m + p]
+                r = a[s * m + p + m // 2] * omega(m, -p)
+                a[s * m + p] = l + r
+                a[s * m + p + m // 2] = l - r
+        m *= 2
+
+    # 係数1/2の影響をまとめて処理
+    for i in range(n):
+        a[i] /= n
+
+# iを長さkのbit列と見たとき、それを反転させたものを返す
+def rev(i, k):
+    # 省略
+
+# IFFT本体
+def ifft(a):
+    n = len(a)
+
+    # n = 2^kなるkを求める
+    k = 0
+    while (1 << k) < n:
+        k += 1
+        
+    # 適切に並び替える
+    for i in range(n):
+        j = rev(i, k)
+        if i < j:
+            swap(a[i], a[j])
+
+    iufft(a, 0, n)
+```
+

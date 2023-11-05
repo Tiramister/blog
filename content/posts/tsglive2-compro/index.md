@@ -2,10 +2,9 @@
 title: "TSG LIVE! 2 ライブ競技プログラミング 反省"
 date: 2018-12-10
 tags: [voluntary, marathon]
-links:
-  - label: "TSG Advent Calendar 2018"
-    url: https://adventar.org/calendars/3450
 ---
+
+この記事は [TSG Advent Calendar 2018](https://adventar.org/calendars/3450) の 10 日目の記事として書かれたものです。
 
 私は東京大学の TSG(理論科学グループ)というサークルに所属しているのですが、TSG は今年の駒場祭[^komabasai]で「TSG LIVE! 2」という企画を 3 日に渡って開催しました。
 
@@ -123,3 +122,4 @@ challenge のケースは以下のようになっており、盤面が実質直�
 
 マラソンも楽しいのですが、次に TSG LIVE があれば作問に挑戦してアルゴリズムも開きたいなぁと思いました。
 アルゴリズム勢は TSG にもそれなりにいるので楽しそうです。
+

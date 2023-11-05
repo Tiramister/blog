@@ -2,9 +2,6 @@
 title: Miller-Rabin 素数判定法
 date: 2021-03-05
 tags: [algorithm]
-links:
-  - label: Verify
-    url: https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=5265639#1
 ---
 
 **Miller-Rabin 素数判定法** は、正整数 $n$ が与えられたときに、「 $n$ が素数であるか否か」を判定する確率的アルゴリズムである。
@@ -73,10 +70,10 @@ Miller-Rabin 素数判定法では、Fermat の小定理に加えて以下の命
 「 $x^2 \equiv 1 \pmod{p}$ 」は「 $x^2-1 = (x+1)(x-1)$ が $p$ の倍数である」と同値である。
 さらに $p$ は素数なので、 $x+1$ と $x-1$ の少なくとも一方は $p$ の倍数となる。
 
-- $x+1$ が $p$ の倍数の場合は $x \equiv -1 \pmod{n}$
-- $x-1$ が $p$ の倍数の場合は $x \equiv 1 \pmod{n}$
+- $x+1$ が $p$ の倍数の場合は $x \equiv -1 \pmod{p}$
+- $x-1$ が $p$ の倍数の場合は $x \equiv 1 \pmod{p}$
 
-が成り立つので、まとめると $x \equiv \pm 1 \pmod{n}$ となる。
+が成り立つので、まとめると $x \equiv \pm 1 \pmod{p}$ となる。 $\\square$
 {{</ collapse >}}
 
 この対偶を取ると以下のようになる。
@@ -97,9 +94,9 @@ $n - 1$ は偶数なので、 $n - 1 = 2^t u$ を満たす正整数 $t$ と奇�
 この $t,u$ を用いて、以下のアルゴリズムで $n$ が素数か否かを判定する。
 
 1. $1 \leq a \lt n$ を満たす整数 $a$ を乱択する。
-2. $x_i = a^{2^i u} \bmod{n}$ なる長さ $t+1$ の数列 $(x_0, x_1, \cdots, x_t)$ を計算する。
-3. もし $x_{i+1} = ({x_i}^2 \bmod{n}) = 1$ かつ $x_i \neq 1, n-1$ なる $i$ が見つかれば、「 $n$ は素数でない」と出力して終了する (命題 4)。
-4. $x_t = (a^{n-1} \bmod{n}) \neq 1$ なら「 $n$ は素数でない」と出力して終了する (命題 2)。
+2. $x\_i = a^{2^i u} \bmod{n}$ なる長さ $t+1$ の数列 $(x\_0, x\_1, \cdots, x\_t)$ を計算する。
+3. もし $x\_{i+1} = ({x\_i}^2 \bmod{n}) = 1$ かつ $x\_i \neq 1, n-1$ なる $i$ が見つかれば、「 $n$ は素数でない」と出力して終了する (命題 4)。
+4. $x\_t = (a^{n-1} \bmod{n}) \neq 1$ なら「 $n$ は素数でない」と出力して終了する (命題 2)。
 5. 「 $n$ は多分素数である」と出力する。
 
 $a^{n-1} \bmod{n}$ を求める過程である手順 3 で、命題 4 を用いて判定している点が変更点である。
@@ -120,6 +117,53 @@ Fermat テストでは証人の割合が $n$ に大きく依存していたこ�
 
 ### 実装例
 
-Miller-Rabin 素数判定法を Python3 で実装すると以下のようになる。 Verify はリンクを参照。
+Miller-Rabin 素数判定法を Python3 で実装すると以下のようになる。
 
-{{< code file="miller-rabin.py" language="python" >}}
+```py
+import random
+
+
+# aはnの証人となる(= nは素数でないと分かる)ならTrue
+def witness(n, a):
+    t, u = 0, n - 1
+    while u & 1 == 0:
+        t += 1
+        u >>= 1
+    # n-1 = 2^t * u
+
+    x = pow(a, u, n)
+    # x_0 = a^u mod n
+
+    for _ in range(t):
+        y = x * x % n
+        # x_{i+1} = (x_i)^2 mod n
+
+        if y == 1:
+            # (x^2 mod n) = 1
+
+            if x != 1 and x != n - 1:
+                return True
+            else:
+                # 以降全て1なのでOK
+                return False
+        x = y
+
+    # x_t = (a^{n-1} mod n) != 1
+    return True
+
+
+# nが素数か判定 試行回数s
+def miller_rabin(n, s):
+    # 自明なケースを処理
+    if n == 1:
+        return False
+    if n % 2 == 0:
+        return n == 2
+
+    for _ in range(s):
+        a = random.randint(1, n - 1)
+        if witness(n, a):
+            return False
+    return True
+```
+

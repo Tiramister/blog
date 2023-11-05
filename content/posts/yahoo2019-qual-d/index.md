@@ -2,12 +2,9 @@
 title: "みんなのプロコン 2019 予選 D - Ears"
 date: 2019-02-10
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/yahoo-procon2019-qual/tasks/yahoo_procon2019_qual_d
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/yahoo-procon2019-qual/submissions/34682264
 ---
+
+[D - Ears](https://atcoder.jp/contests/yahoo-procon2019-qual/tasks/yahoo_procon2019_qual_d)
 
 ### 概要
 
@@ -53,4 +50,48 @@ $$
 
 ### 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #34682264 - 「みんなのプロコン 2019」](https://atcoder.jp/contests/yahoo-procon2019-qual/submissions/34682264)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+using lint = long long;
+
+const lint INF = 1LL << 50;
+
+lint f(int k, lint a) {
+  if (k == 2) {
+    // 奇数の区間
+    return (a + 1) % 2;
+  } else if (k == 1 || k == 3) {
+    // 偶数の区間
+    // 0個は許されないことに注意
+    return (a == 0 ? 2 : a % 2);
+  } else {
+    // 無の区間
+    return a;
+  }
+}
+
+int main() {
+  int n;
+  cin >> n;
+
+  vector<lint> xs(n);
+  for (auto& x : xs) cin >> x;
+
+  vector<lint> dp(5, 0);
+  for (auto x : xs) {
+    // index を進める
+    for (int k = 0; k < 5; ++k) dp[k] += f(k, x);
+    // 区間変更
+    for (int k = 1; k < 5; ++k) dp[k] = min(dp[k], dp[k - 1]);
+  }
+
+  cout << dp[4] << endl;
+  return 0;
+}
+```
+

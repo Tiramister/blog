@@ -2,12 +2,9 @@
 title: "yukicoder No.980 Fibonacci Convolution Hard"
 date: 2020-02-01
 tags: [yukicoder]
-links:
-  - label: "Problem link"
-    url: "https://yukicoder.me/problems/no/980"
-  - label: "My Submission"
-    url: "https://yukicoder.me/submissions/424001"
 ---
+
+[No.980 Fibonacci Convolution Hard - yukicoder](https://yukicoder.me/problems/no/980)
 
 ## 問題
 
@@ -53,4 +50,40 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[#424001 (C++17(clang)) No.980 Fibonacci Convolution Hard - yukicoder](https://yukicoder.me/submissions/424001)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using lint = long long;
+
+template <int MOD>
+struct ModInt { ... };
+
+constexpr int MOD = 1e9 + 7;
+using mint = ModInt<MOD>;
+
+constexpr int N = 2000000;
+
+void solve() {
+    mint p;
+    std::cin >> p;
+
+    std::vector<mint> xs(N + 1, 0);
+    xs[4] = 1;
+    for (int i = 5; i <= N; ++i) {
+        xs[i] = xs[i - 1] * p * 2 - xs[i - 2] * (p * p - 2) -
+                xs[i - 3] * p * 2 - xs[i - 4];
+    }
+
+    int q;
+    std::cin >> q;
+    while (q--) {
+        int n;
+        std::cin >> n;
+        std::cout << xs[n] << std::endl;
+    }
+}
+```
+

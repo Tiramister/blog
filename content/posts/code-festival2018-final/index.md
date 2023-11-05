@@ -2,11 +2,6 @@
 title: "CODE FESTIVAL 2018 本戦 参戦記"
 date: 2018-11-18
 tags: [atcoder]
-links:
-  - label: "Official Site"
-    url: https://www.recruit-jinji.jp/recruitment/code_fes/
-  - label: "Contest"
-    url: https://atcoder.jp/contests/code-festival-2018-final-open
 ---
 
 11/17 に行われた CODE FESTIVAL 2018 の本戦へ行ってきました。本記事はその体験記です。
@@ -21,6 +16,8 @@ links:
 その後続々と人々が入場。やはり Twitter で見かける人々が多かったです。まぁ初対面で声を掛けるコミュ力はないわけですが。
 
 ## 本戦
+
+[CODE FESTIVAL 2018 Final - AtCoder](https://atcoder.jp/contests/code-festival-2018-final)
 
 それから開会式の後、いよいよ当日のメインである CODE FESTIVAL 本戦が始まりました。
 パーカーを獲得するには 300 点 3 問に加えてもう 1 問解き計 1400 点を獲得する必要があるという、とてもハードな戦いでした。
@@ -88,3 +85,4 @@ Challenge AI は僕も挑戦していたのですが全然強いのが作れず�
 こどふぇす全体で一番楽しかったのは、やはりチームリレーでした。自分より上の人々がどういった考察をしているのかを間近で見られる機会というのはそうそうないので、とてもいい刺激になりました。
 
 今年初めて参加したこどふぇすでしたが、終わったときに一番強く残った感想が「来年も絶対参加したい」でした。次はもっと色々なことが楽しめるように、今から精進して腕を磨いていきたいですね。
+

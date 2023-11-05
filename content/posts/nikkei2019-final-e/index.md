@@ -2,12 +2,9 @@
 title: "第一回全国統一プログラミング王決定戦 (日経コン 2019) 本戦 E - Erasure"
 date: 2020-02-14
 tags: [atcoder]
-links:
-  - label: "Problem link"
-    url: "https://atcoder.jp/contests/nikkei2019-final/tasks/nikkei2019_final_e"
-  - label: "My Submission"
-    url: "https://atcoder.jp/contests/nikkei2019-final/submissions/10080765"
 ---
+
+[E - Erasure](https://atcoder.jp/contests/nikkei2019-final/tasks/nikkei2019_final_e)
 
 ## 問題
 
@@ -33,7 +30,7 @@ $dp\_m =$ 「 $n = m$ のときの答え」を求める．
 左から黒マスがちょうど $l$ マス連続するような選び方を数える．
 このとき左から $l+1$ マス目は白，それより右側は自由に塗れる．よって長さ $l$ の区間に含まれる長さ $k+1$ の区間の個数を $p\_l$ とすると，そのような選び方は $dp\_\{l\} \\cdot 2\^\{p\_\{m - l - 1\}\}$ 通りとなる。
 
-ここで問題文にもある通り， $p_l$ は以下で求まる。
+ここで問題文にもある通り， $p\_l$ は以下で求まる。
 
 $$
 p\_l =
@@ -58,4 +55,37 @@ $$
 
 以下では $p\_l$ でなく $2\^\{p\_l\}$ を前計算している．今回は大丈夫だろうが，累乗は地味に時間が掛かるので注意．
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #10080765 - 全国統一プログラミング王決定戦本戦](https://atcoder.jp/contests/nikkei2019-final/submissions/10080765)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+template <int MOD>
+struct ModInt { ... };
+
+constexpr int MOD = 1e9 + 7;
+using mint = ModInt<MOD>;
+
+void solve() {
+    int n, k;
+    std::cin >> n >> k;
+
+    std::vector<mint> pat(n + 1);
+    for (int l = 0; l <= n; ++l) {
+        pat[l] = l < k ? 1 : mint(2).pow((l - k) * (l - k + 1) / 2);
+    }
+
+    std::vector<mint> just(n + 1, 0);
+    just[0] = 1;
+    for (int i = 1; i <= n; ++i) {
+        just[i] = pat[i];
+        for (int l = 0; l < i; ++l) {
+            just[i] -= just[l] * pat[i - l - 1];
+        }
+    }
+
+    std::cout << just[n] << std::endl;
+}
+```
+

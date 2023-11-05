@@ -2,10 +2,9 @@
 title: "AtCoder Beginner Contest 114"
 date: 2018-12-02
 tags: [atcoder]
-links:
-  - label: "Contest"
-    url: https://atcoder.jp/contests/abc114
 ---
+
+[AtCoder Beginner Contest 114 - AtCoder](https://atcoder.jp/contests/abc114)
 
 ## C - 755
 
@@ -40,7 +39,71 @@ $1$ 以上 $N$ 以下の七五三数はいくつあるか求めよ。
 
 上の手順 3 なのだが、以下の実装例では $b$ を 3 進数表記して反転させたのちに変換したことになっている。どちらにせよ全列挙はできるので問題はない。
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3703479 - AtCoder Beginner Contest 114](https://atcoder.jp/contests/abc114/submissions/3703479)
+
+```cpp
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+// b^nを計算する関数
+int mypow(int b, int n) {
+    if (n == 0) return 1;
+    if (n == 1) return b;
+    if (n % 2 == 0) {
+        return mypow(b * b, n / 2);
+    } else {
+        return mypow(b, n - 1) * b;
+    }
+}
+
+// 012と753を変換する変数
+const string i2c = "753";
+const map<char, int> c2i = {{'7', 0}, {'5', 1}, {'3', 2}};
+
+int main() {
+    int N;
+    cin >> N;
+
+    int ans = 0;
+
+    // dは桁数
+    for (int d = 3; d < 10; ++d) {
+        for (int b = 0; b < mypow(3, d); ++b) {
+            string S;
+
+            int cb = b;
+            // 1の位から753に変換してpushしていく
+            for (int i = 0; i < d; ++i) {
+                S.push_back(i2c[cb % 3]);
+                cb /= 3;
+            }
+
+            // 7, 5, 3の出現回数を数える
+            bool cnt[3];
+            fill(cnt, cnt + 3, false);
+
+            for (char c : S) {
+                cnt[c2i[c]] = true;
+            }
+
+            bool judge = true;
+            for (int i = 0; i < 3; ++i) {
+                if (!cnt[i]) judge = false;
+            }
+            if (!judge) continue;
+
+            // N以下ならカウントする
+            if (stoi(S) <= N) ++ans;
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+
+```
 
 ## D - 756
 
@@ -77,4 +140,69 @@ $100$ 以下の素数の数は 25 個なので、パターン数は $25\^3 = 156
 
 エラトステネスの篩を実装するのが面倒だったので、ネットから引っ張ってきた素数一覧をそのままコピペしている。
 
-{{<code file="1.cpp" language="cpp">}}
+[提出 #3704475 - AtCoder Beginner Contest 114](https://atcoder.jp/contests/abc114/submissions/3704475)
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+// 100以下の素数一覧
+const int prime[25] = {
+    2, 3, 5, 7, 11,
+    13, 17, 19, 23, 29,
+    31, 37, 41, 43, 47,
+    53, 59, 61, 67, 71,
+    73, 79, 83, 89, 97};
+
+int main() {
+    int N;
+    cin >> N;
+
+    int cnt[25];
+    fill(cnt, cnt + 25, 0);
+    // cnt[i] = N!を素因数分解したときのp[i]の指数
+
+    for (int n = 1; n <= N; ++n) {
+        int m = n;
+
+        // mを素因数分解する
+        for (int i = 0; i < 25; ++i) {
+            while (m % prime[i] == 0) {
+                ++cnt[i];
+                m /= prime[i];
+            }
+        }
+    }
+
+    int ans = 0;
+
+    // p^74の形
+    for (int p = 0; p < 25; ++p) {
+        if (cnt[p] >= 74) ++ans;
+    }
+
+    // p^2 q^24とp^4 q^14の形
+    for (int p = 0; p < 25; ++p) {
+        for (int q = 0; q < 25; ++q) {
+            if (p == q) continue;
+            if (cnt[p] >= 4 && cnt[q] >= 14) ++ans;
+            if (cnt[p] >= 2 && cnt[q] >= 24) ++ans;
+        }
+    }
+
+    // p^2 q^4 r^4の形
+    for (int p = 0; p < 25; ++p) {
+        for (int q = 0; q < 25; ++q) {
+            // 重複カウントを防ぐためにq < rにしている
+            for (int r = q + 1; r < 25; ++r) {
+                if (p == q || r == p) continue;
+                if (cnt[p] >= 2 && cnt[q] >= 4 && cnt[r] >= 4) ++ans;
+            }
+        }
+    }
+
+    cout << ans << endl;
+    return 0;
+}
+```

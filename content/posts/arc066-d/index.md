@@ -2,10 +2,9 @@
 title: "AtCoder Regular Contest 066 D - Xor Sum"
 date: 2019-02-26
 tags: [atcoder]
-links:
-  - label: "Problem Link"
-    url: https://atcoder.jp/contests/arc066/tasks/arc066_b
 ---
+
+[D - Xor Sum](https://atcoder.jp/contests/arc066/tasks/arc066_b)
 
 ## 概要
 
@@ -45,7 +44,21 @@ links:
 
 以上を踏まえると、 $v$ を固定したときに $a \\oplus b$ の取りうる値の数は以下のような再帰関数によって求まる。
 
-{{<code file="0.cpp" language="cpp" title="遅い解法">}}
+```cpp
+ll rec(ll v) {
+    if (v == 0) return 1;
+
+    if (v & 1) {
+        // 最下位は1で確定
+        // 繰り上がりはないので、それより上についてそのまま考えればいい
+        return rec(v >> 1);
+    } else {
+        // 最下位は0で確定
+        // 繰り上がりが起こるか否かで場合分け
+        return rec(v >> 1) + rec((v >> 1) - 1);
+    }
+}
+```
 
 ## 高速化
 
@@ -70,4 +83,35 @@ links:
 
 ## 実装例
 
-{{<code file="1.cpp" language="cpp">}}
+[提出 #4392510 - AtCoder Regular Contest 066](https://atcoder.jp/contests/arc066/submissions/4392510)
+
+```cpp
+#include <iostream>
+#include <map>
+
+using namespace std;
+using ll = long long;
+
+const ll MOD = 1000000007;
+
+map<ll, ll> dp;
+
+// v=0,1,...,Mにおける解の合計
+ll rec(ll M) {
+    if (M == 0) return 1;
+    if (dp.count(M)) return dp[M];
+
+    dp[M] = rec((M - 1) / 2);            // 奇数
+    dp[M] += rec(M / 2);                 // 偶数 繰り上がり無
+    if (M > 1) dp[M] += rec(M / 2 - 1);  // 偶数 繰り上がり有
+    return dp[M] %= MOD;
+}
+
+int main() {
+    ll N;
+    cin >> N;
+    cout << rec(N) << endl;
+    return 0;
+}
+```
+

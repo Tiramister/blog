@@ -2,10 +2,9 @@
 title: "AtCoder Grand Contest 010 A - Addition"
 date: 2018-11-10
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc010/tasks/agc010_a
 ---
+
+[A - Addition](https://atcoder.jp/contests/agc010/tasks/agc010_a)
 
 ## 概要
 
@@ -39,4 +38,27 @@ links:
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #4780154 - AtCoder Grand Contest 010](https://atcoder.jp/contests/agc010/submissions/4780154)
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+
+    int oddcnt = 0;
+    for (int i = 0; i < N; ++i) {
+        int A;
+        cin >> A;
+
+        // 2で割った余りを足すことで、奇数の場合のみ1を加算
+        oddcnt += A % 2;
+    }
+
+    cout << (oddcnt % 2 == 0 ? "YES" : "NO") << endl;
+    return 0;
+}
+```
+

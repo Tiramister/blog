@@ -2,10 +2,9 @@
 title: "AtCoder Grand Contest 011 A - Airport Bus"
 date: 2018-11-11
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc011/tasks/agc011_a
 ---
+
+[A - Airport Bus](https://atcoder.jp/contests/agc011/tasks/agc011_a)
 
 ## 概要
 
@@ -32,4 +31,41 @@ links:
 
 最初に `limit = -1` としているのは、1 人目のときだけ例外処理をしなくて済むようにするためである。
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3583053 - AtCoder Grand Contest 011](https://atcoder.jp/contests/agc011/submissions/3583053)
+
+```cpp
+#include <algorithm>
+#include <iostream>
+using namespace std;
+using ll = long long;
+
+int main() {
+    ll N, C, K;
+    cin >> N >> C >> K;
+
+    ll T[N];
+    for (int i = 0; i < N; ++i) {
+        cin >> T[i];
+    }
+    sort(T, T + N);
+
+    ll ans = 0, limit = -1, cap = 0;
+    // ans   = 発車された累計バス台数
+    // limit = 先頭の客の許容時間
+    // cap   = 今バスに乗ってる客数
+
+    for (int i = 0; i < N; ++i) {
+        if (cap == C || T[i] > limit) {
+            // 制限オーバーなので新しいバスに乗せる
+            ++ans;
+            limit = T[i] + K;
+            cap = 0;
+        }
+        ++cap;
+    }
+
+    cout << ans << endl;
+    return 0;
+}
+```
+

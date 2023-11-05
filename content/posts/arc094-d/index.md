@@ -2,10 +2,9 @@
 title: "AtCoder Regular Contest 094 D - Worst Case"
 date: 2018-09-19
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/arc094/tasks/arc094_b
 ---
+
+[D - Worst Case](https://atcoder.jp/contests/arc094/tasks/arc094_b)
 
 ## 概要
 
@@ -72,4 +71,42 @@ $(a + b)(a - b) = a\^2 - b\^2$ を考えると、 $b$ が小さい、すなわ�
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3222682 - AtCoder Regular Contest 094](https://atcoder.jp/contests/arc094/submissions/3222682)
+
+```cpp
+#include <iostream>
+using namespace std;
+typedef long long ll;
+
+int main() {
+    int Q;
+    cin >> Q;
+    for (int q = 0; q < Q; ++q) {
+        ll A, B;
+        cin >> A >> B;
+        if (A > B) {
+            swap(A, B);
+        }  // A <= B
+
+        ll ok = A, ng = B + 1;
+        // K = Aのときは前半と同様にマッチングすればいい
+
+        while (ng - ok > 1) {
+            ll K = (ok + ng) / 2;
+            ll m = (K + A) / 2;
+
+            // コーナーケース
+            if (K == A) --m;
+
+            if (m * (A + K - m) < A * B) {
+                ok = K;
+            } else {
+                ng = K;
+            }
+        }
+        cout << ok + A - 2 << endl;
+    }
+    return 0;
+}
+```
+

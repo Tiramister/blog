@@ -2,12 +2,9 @@
 title: "AtCoder Grand Contest 001 B - Mysterious Light"
 date: 2018-09-18
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc001/tasks/agc001_b
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/agc001/submissions/3218003
 ---
+
+[B - Mysterious Light](https://atcoder.jp/contests/agc001/tasks/agc001_b)
 
 ## 概要
 
@@ -54,4 +51,30 @@ links:
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3218003 - AtCoder Grand Contest 001](https://atcoder.jp/contests/agc001/submissions/3218003)
+
+```cpp
+#include <iostream>
+using namespace std;
+using ll = long long;
+
+// (A, B)の平行四辺形内での軌道の長さ
+ll reflect(ll A, ll B) {
+    if (A > B) swap(A, B);
+
+    ll ref = B / A;
+    if (B % A == 0) {
+        return (ref * 2 - 1) * A;
+    } else {
+        return ref * 2 * A + reflect(B % A, A);
+    }
+}
+
+int main() {
+    ll N, X;
+    cin >> N >> X;
+    cout << N + reflect(X, N - X) << endl;
+    return 0;
+}
+```
+

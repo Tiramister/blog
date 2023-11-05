@@ -2,12 +2,9 @@
 title: "AtCoder Grand Contest 005 B - Minimum Sum"
 date: 2018-09-28
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc005/tasks/agc005_b
-  - label: "My Submisstion"
-    url: https://atcoder.jp/contests/agc005/submissions/3281109
 ---
+
+[B - Minimum Sum](https://atcoder.jp/contests/agc005/tasks/agc005_b)
 
 ## 概要
 
@@ -40,4 +37,47 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3281109 - AtCoder Grand Contest 005](https://atcoder.jp/contests/agc005/submissions/3281109)
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+using ll = long long;
+
+int main() {
+    int N;
+    cin >> N;
+
+    ll place[N + 1];
+    // place[i]...値iのaにおけるindex
+
+    for (int i = 1; i <= N; ++i) {
+        ll a;
+        cin >> a;
+        place[a] = i;
+        // 保持するのはindexなので、ここが普通と逆なことに注意
+    }
+
+    ll ans = 0;
+    set<ll> used = {0, N + 1};
+    // すでに見た要素のindexを保持する
+
+    for (int i = 1; i <= N; ++i) {
+        ll r, l;
+
+        auto itr = used.lower_bound(place[i]);
+        r = *itr;
+        // lower_boundで右端を調べる(upper_boundでもいい)
+        l = *(--itr);
+        // その1個手前が左端
+
+        ans += i * (place[i] - l) * (r - place[i]);
+        used.insert(place[i]);
+    }
+
+    cout << ans << endl;
+    return 0;
+}
+```
+

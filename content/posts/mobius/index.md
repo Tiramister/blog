@@ -78,4 +78,5 @@ $f$ の定義で出た
 
 と定義してやることができる．
 
-今回の問題では「 $h(n) = \\delta(n, 1)$ 」( $\\delta$ はクロネッカーのデルタ)， [LCMs](https://atcoder.jp/contests/agc038/tasks/agc038_c) では「 $h(n) = \\textcolor\{#1f222a\}\{1/n}$」となっている(ネタバレ防止)．
+今回の問題では「$h(n) = \\delta(n, 1)$ 」( $\\delta$ はクロネッカーのデルタ) となっている.
+

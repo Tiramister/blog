@@ -2,12 +2,9 @@
 title: "第一回日本最強プログラマー学生選手権 予選 C - Cell Inversion"
 date: 2019-08-25
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/jsc2019-qual/tasks/jsc2019_qual_c
-  - label: My Submission
-    url: https://atcoder.jp/contests/jsc2019-qual/submissions/7126968
 ---
+
+[C - Cell Inversion](https://atcoder.jp/contests/jsc2019-qual/tasks/jsc2019_qual_c)
 
 ## 問題
 
@@ -56,4 +53,40 @@ $S\_1$ が B である場合は 1 とペアになる index があるが、これ
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #7126968 - 第一回日本最強プログラマー学生選手権-予選-](https://atcoder.jp/contests/jsc2019-qual/submissions/7126968)
+
+```cpp
+using namespace std;
+using mint = ModInt<1000000007>;
+
+int main() {
+    int N;
+    string S;
+    cin >> N >> S;
+
+    int K = 0;
+    mint ans = 1;
+    for (auto c : S) {
+        if ((c == 'W') == (K % 2 == 0)) {
+            // 保留中のどれかの右端にする
+            ans *= K;
+            if ((--K) < 0) break;
+        } else {
+            // iを左端にする　右端は保留
+            ++K;
+        }
+    }
+
+    if (K != 0) {
+        // invalidなマッチング
+        cout << 0 << endl;
+        return 0;
+    }
+
+    // N!を掛けて出力
+    for (int i = 1; i <= N; ++i) ans *= i;
+    cout << ans << endl;
+    return 0;
+}
+```
+

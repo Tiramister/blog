@@ -203,3 +203,4 @@ UART 通信を行う手段として AXI UART Lite という IP コアを使う�
 - [7 Series FPGAs Memory Resources](https://www.xilinx.com/support/documentation/user_guides/ug473_7Series_Memory_Resources.pdf)
 
 BRAM を使う上で用いた、Block Memory Generator という IP コアの公式ドキュメントです。しかし上の方にはプロトコルが存在せず、下の方の資料にありました。
+

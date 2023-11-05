@@ -4,10 +4,12 @@ date: 2020-10-22
 tags: [atcoder]
 links:
   - label: "Problem link"
-    url: "https://atcoder.jp/contests/jsc2019-final/tasks/jsc2019_final_d"
+    url: ""
   - label: "My Submission"
-    url: "https://atcoder.jp/contests/jsc2019-final/submissions/17572138"
+    url: ""
 ---
+
+[D - Minimize Maximum](https://atcoder.jp/contests/jsc2019-final/tasks/jsc2019_final_d)
 
 ## 問題
 
@@ -54,4 +56,48 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #17572138 - 第一回日本最強プログラマー学生選手権決勝](https://atcoder.jp/contests/jsc2019-final/submissions/17572138)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+template <class T>
+struct ConvexHullTrick { ... };
+
+using lint = long long;
+constexpr lint INF = 1 << 30;
+
+void solve() {
+    int n;
+    std::cin >> n;
+
+    std::vector<std::pair<lint, lint>> ps(n);
+    for (auto& [l, r] : ps) std::cin >> l;
+    for (auto& [l, r] : ps) std::cin >> r;
+
+    ConvexHullTrick<lint> cht;
+    lint ans = -INF;
+
+    for (int i = 0; i < n; ++i) {
+        auto [l, r] = ps[i];
+        cht.add(i, r);
+        if (i == 0) continue;
+
+        lint ok = INF, ng = ans - 1;  // 二分探索の下界をansに
+        while (ok - ng > 1) {
+            lint x = (ok + ng) / 2;
+
+            if (l - x * i <= cht(-x)) {
+                ok = x;
+            } else {
+                ng = x;
+            }
+        }
+
+        ans = ok;
+        std::cout << ans << "\n";
+    }
+}
+
+```

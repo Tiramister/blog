@@ -2,12 +2,9 @@
 title: "AtCoder Regular Contest 102 C - Triangular Relationship"
 date: 2018-09-20
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/arc102/tasks/arc102_a
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/arc102/submissions/3229596
 ---
+
+[C - Triangular Relationship](https://atcoder.jp/contests/arc102/tasks/arc102_a)
 
 ## 概要
 
@@ -58,4 +55,26 @@ $1 \\sim N$ には $K$ で割って $K/2$ 余る値が $\\lceil (N + K/2) / K \\
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3229596 - AtCoder Regular Contest 102](https://atcoder.jp/contests/arc102/submissions/3229596)
+
+```cpp
+#include <iostream>
+using namespace std;
+using ll = long long;
+
+ll triple(ll a) {
+    return a * a * a;
+}
+
+int main() {
+    ll N, K;
+    cin >> N >> K;
+    ll ans = triple(N / K);
+    if (K % 2 == 0) {
+        ans += triple((N + K / 2) / K);
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+

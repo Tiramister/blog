@@ -2,12 +2,9 @@
 title: "AtCoder Regular Contest 074 C - Chocolate Bar"
 date: 2018-09-17
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/arc074/tasks/arc074_a
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/arc074/submissions/34748518
 ---
+
+[C - Chocolate Bar](https://atcoder.jp/contests/arc074/tasks/arc074_a)
 
 ## 概要
 
@@ -31,4 +28,42 @@ $H \\times W$ のグリッド状をした板チョコがある。これを切れ
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #34748518 - AtCoder Regular Contest 074](https://atcoder.jp/contests/arc074/submissions/34748518)
+
+```cpp
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+using ll = long long;
+
+int main() {
+    ll H, W;
+    cin >> H >> W;
+
+    ll ans = H * W;
+    ll s[3];
+    for (int i = 0; i < 2; ++i) {
+        for (ll h = 1; h < H; ++h) {
+            // まずは縦割り
+            s[0] = h * W;
+            s[1] = (H - h) * (W / 2);
+            s[2] = H * W - (s[0] + s[1]);
+            sort(s, s + 3);
+            ans = min(ans, s[2] - s[0]);
+
+            // 次いで横割り
+            s[0] = h * W;
+            s[1] = ((H - h) / 2) * W;
+            s[2] = H * W - (s[0] + s[1]);
+            sort(s, s + 3);
+            ans = min(ans, s[2] - s[0]);
+        }
+        // 板チョコを90度回す
+        swap(H, W);
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+

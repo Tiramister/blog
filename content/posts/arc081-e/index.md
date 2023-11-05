@@ -2,12 +2,9 @@
 title: AtCoder Regular Contest 081 E - Don't Be a Subsequence
 date: 2020-11-26
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/arc081/tasks/arc081_c
-  - label: My Submission
-    url: https://atcoder.jp/contests/arc081/submissions/18405139
 ---
+
+[E - Don't Be a Subsequence](https://atcoder.jp/contests/arc081/tasks/arc081_c)
 
 ## 問題
 
@@ -44,4 +41,57 @@ $S$ が空文字列でもよいことに注意(この場合、解は `a` とな�
 $c$ が含まれない場合の処理を場合分けなしでやろうとしたら、却って実装がバグった。
 自然に解釈できない番兵は使うべきではない。
 
-{{<code file="main.cpp" language="cpp">}}
+[提出 #18405139 - AtCoder Regular Contest 081](https://atcoder.jp/contests/arc081/submissions/18405139)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+template <class T>
+std::vector<T> vec(int len, T elem) { return std::vector<T>(len, elem); }
+
+using namespace std;
+
+void solve() {
+    string s;
+    cin >> s;
+    int n = s.length();
+
+    vector<int> len(n + 1, n);  // S[i, n)に対する解の長さ
+    len[n] = 1;
+    auto nxt = vec(n + 1, vec(26, -1));
+    // S[i, n)で一番手前にあるcの位置(なければ-1)
+
+    for (int i = n - 1; i >= 0; --i) {
+        nxt[i] = nxt[i + 1];
+        nxt[i][s[i] - 'a'] = i;
+
+        for (auto j : nxt[i]) {
+            int nlen = (j == -1 ? 0 : len[j + 1]) + 1;
+            len[i] = min(len[i], nlen);
+        }
+    }
+
+    int i = 0, l = len[0];
+    while (l > 0) {
+        int nc = -1;  // 次の文字
+
+        for (int c = 0; c < 26; ++c) {
+            auto j = nxt[i][c];
+            int nlen = (j == -1 ? 0 : len[j + 1]) + 1;
+
+            if (nlen == l) {
+                nc = c;
+                break;
+            }
+        }
+
+        cout << char(nc + 'a');
+        i = nxt[i][nc] + 1;
+        --l;
+    }
+    cout << "\n";
+}
+```
+

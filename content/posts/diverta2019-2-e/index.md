@@ -2,12 +2,9 @@
 title: "diverta 2019 Programming Contest 2 E - Balanced Piles"
 date: 2019-06-16
 tags: [atcoder]
-links:
-  - label: "Problem Link"
-    url: https://atcoder.jp/contests/diverta2019-2/tasks/diverta2019_2_e
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/diverta2019-2/submissions/5942337
 ---
+
+[E - Balanced Piles](https://atcoder.jp/contests/diverta2019-2/tasks/diverta2019_2_e)
 
 ## 問題
 
@@ -27,7 +24,7 @@ $N$ 個の何も置かれていないマスがある。
 
 ## 考察
 
-※以下を読む前に、pekempey さんのブログがとても分かりやすいので
+※ 以下を読む前に、pekempey さんのブログがとても分かりやすいので
 そちらを先に読むことをオススメします。
 [diverta 2019 Programming Contest\. E \- Balanced Piles \- pekempey's blog](https://pekempey.hatenablog.com/entry/2019/06/16/002247)
 
@@ -68,4 +65,40 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #5942337 - diverta 2019 Programming Contest 2](https://atcoder.jp/contests/diverta2019-2/submissions/5942337)
+
+```cpp
+template <int MOD> class ModInt { ... }
+template <int MOD> class Combination { ... }
+
+constexpr int MOD = 1e9 + 7;
+using mint = ModInt<MOD>;
+const Combination<MOD> C(1 << 20);
+
+int main() {
+    /* ----- 入力 ----- */
+    int N, H, D;
+    cin >> N >> H >> D;
+
+    /* ----- 1! + ... + N! ----- */
+    mint fsum = 0;
+    for (int l = 1; l <= N; ++l) {
+        fsum += C.fact(l);
+    }
+
+    /* ----- DP ----- */
+    vector<mint> dp(H + 1, 0), dpsum(H + 1, 0);
+    dp[0] = dpsum[0] = C.fact(N) / fsum;
+    // dp[h] = ブロック数の最大値がhで、そのような山の数が1個となるような操作数
+
+    for (int h = 1; h <= H; ++h) {
+        dp[h] = fsum * (dpsum[h - 1] -
+                        (h - D - 1 >= 0 ? dpsum[h - D - 1] : 0));
+        dpsum[h] = dpsum[h - 1] + dp[h];
+    }
+
+    cout << dp[H] << endl;
+    return 0;
+}
+```
+

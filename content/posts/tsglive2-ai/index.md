@@ -2,12 +2,11 @@
 title: "TSG LIVE! 2 ライブ AI プログラミング 反省"
 date: 2018-12-20
 tags: [voluntary, marathon]
-links:
-  - label: "TSG Advent Calendar 2018"
-    url: https://adventar.org/calendars/3450
 ---
 
-10 日前にこの Advent Calendar で「 [TSG LIVE! 2 ライブ競技プログラミング反省](https://tiramister.net/blog/posts/tsglive2-compro/)」という記事を書きました。今回はその続きとして、私がプレイヤーとして参加したもう 1 つの企画「 **ライブ AI プログラミング** 」について書きます。
+この記事は [TSG Advent Calendar 2018](https://adventar.org/calendars/3450) の 20 日目の記事として書かれたものです。
+
+10 日前にこの Advent Calendar で「 [TSG LIVE! 2 ライブ競技プログラミング反省](https://blog.tiramister.net/posts/tsglive2-compro/)」という記事を書きました。今回はその続きとして、私がプレイヤーとして参加したもう 1 つの企画「 **ライブ AI プログラミング** 」について書きます。
 
 どういう企画か簡単に説明すると、「75 分間でできるだけ強い **ゲーム AI** を作る」という企画です。「ゲーム AI」と言ってもそこまで大それたものではなく、ゲームをプレイするプログラムを指します。
 
@@ -49,7 +48,29 @@ $H \\times W$ のまばらに壁が配置され、外周が壁で囲まれた 2 
 
 初期段階では、クラスの構造は以下のような感じでした。
 
-{{<code file="0.cpp" language="cpp">}}
+```cpp
+class Robot {
+public:
+    explicit Robot(int _x, int _y, int _id);
+
+    int x, y, id;
+};
+
+class Board {
+public:
+    explicit Board(int _H, int _W);
+
+    // 標準入力を元に初期化する
+    void load();
+
+    // (x, y)が盤面内にあるか判定する
+    bool inarea(int x, int y);
+
+    int H, W;
+    vector<vector<string>> brd;
+    vector<Robot> beams, targets;
+};
+```
 
 一番懸念していた `Board::load()` の実装もそれほど複雑ではなく、各メンバ関数の具体的な実装は 20 分くらいで終わりました。
 
@@ -82,7 +103,23 @@ $H \\times W$ のまばらに壁が配置され、外周が壁で囲まれた 2 
 
 ちなみに以下が最後までバグらせていた箇所です。どこがバグの原因か分かりますか？
 
-{{<code file="1.cpp" language="cpp">}}
+```cpp
+bool Robot::beam_search(const Board& board, int d) const {
+    int nx = x, ny = y;
+    while (board.inarea(nx, ny) && board.brd[nx][ny] != "*") {
+        nx += dx[d];
+        ny += dy[d];
+
+        for (const Robot& target : board.targets) {
+            if (target.x == nx && target.x == ny) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+```
 
 答えは 8 行目の `target.x == ny` です。コンテスト後、ここを修正したらちゃんと Target を潰してくれました。
 
@@ -96,7 +133,45 @@ $H \\times W$ のまばらに壁が配置され、外周が壁で囲まれた 2 
 
 ちなみに最終的にクラスの構造は以下のように変わりました。
 
-{{<code file="2.cpp" language="cpp">}}
+```cpp
+class Robot {
+public:
+    explicit Robot(int _x, int _y, int _id);
+
+    // メンバ変数を出力
+    void print();
+
+    // 方向dの先にtargetがいればtargets内でのindexを返す
+    // targetがいなければ-1を返す
+    int beam_search(const Board& board, int d) const;
+
+    // targetをdの方向へ動かしたときの動きをシミュレートする
+    void target_move(const Board& board, int d);
+
+    int x, y, id;
+};
+
+class Board {
+public:
+    explicit Board(int _H, int _W);
+
+    // 標準入力からマップを読み込み、ロボットをふるい分け
+    void load();
+
+    // ロボットの情報を出力
+    void print();
+
+    // マス(x, y)がボード内にあるか
+    bool inarea(int x, int y) const;
+
+    // beamsの各Robotからビームを四方へ拡散させる
+    void beam_diffusion();
+
+    int H, W;
+    vector<string> brd;
+    vector<Robot> beams, targets;
+};
+```
 
 ### やりたかったこと
 
@@ -117,8 +192,3 @@ $H \\times W$ のまばらに壁が配置され、外周が壁で囲まれた 2 
 
 それとやはりゲーム AI 実装は難しいです。競プロ以上に複雑な実装もこなせるようになりたいですね。
 
----
-
-本記事は以上になります。ここまで読んでいただきありがとうございました。
-
-明日は(も)つばめ氏による「 [5 文字 or 6 文字で JS を書く話]() 」です。JS は JavaScript として、5、6 文字とは......？楽しみですね。

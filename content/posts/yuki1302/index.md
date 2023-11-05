@@ -2,12 +2,9 @@
 title: yukicoder No.1302 Random Tree Score
 date: 2020-11-28
 tags: [yukicoder]
-links:
-  - label: Problem link
-    url: https://yukicoder.me/problems/no/1302
-  - label: My Submission
-    url: https://yukicoder.me/submissions/586123
 ---
+
+[No.1302 Random Tree Score - yukicoder](https://yukicoder.me/problems/no/1302)
 
 ## 問題
 
@@ -56,4 +53,30 @@ $$
 
 ## 実装例
 
-{{<code file="main.cpp" language="cpp">}}
+[#586123 (C++17) No.1302 Random Tree Score - yukicoder](https://yukicoder.me/submissions/586123)
+
+```cpp
+#include <atcoder/modint>
+#include <iostream>
+#include <vector>
+
+template <class T>
+struct Combination { ... };
+
+using namespace std;
+
+using mint = atcoder::modint998244353;
+const Combination<mint> C(200000);
+
+void solve() {
+    int n;
+    cin >> n;
+
+    mint ans = 0;
+    for (int k = 0; k <= n - 2; ++k) {
+        ans += C.binom(n, k) * mint(n).pow(n - 2 - k) * C.invfact(n - 2 - k);
+    }
+    cout << (ans * C.fact(n - 2) / mint(n).pow(n - 2)).val() << "\n";
+}
+```
+

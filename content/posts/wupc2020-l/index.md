@@ -2,12 +2,9 @@
 title: "WUPC 2020 L - Count Pow Sum"
 date: 2020-09-23
 tags: [voluntary]
-links:
-  - label: "Problem link"
-    url: "https://onlinejudge.u-aizu.ac.jp/challenges/sources/VPC/WUPC/3162"
-  - label: "My Submission"
-    url: "https://onlinejudge.u-aizu.ac.jp/solutions/problem/3162/review/4865597/misteer/C++17"
 ---
+
+[3162 < VPC WUPC < Challenges | Aizu Online Judge](https://onlinejudge.u-aizu.ac.jp/challenges/sources/VPC/WUPC/3162)
 
 ## 問題
 
@@ -44,4 +41,44 @@ $h(k) = (a - \\sqrt\{a\^2 - 1\})\^k$ という関数を考えると、これは 
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[Run #4865597 < misteer < Solutions | Aizu Online Judge](https://onlinejudge.u-aizu.ac.jp/solutions/problem/3162/review/4865597/misteer/C++17)
+
+```cpp
+#include <iostream>
+#include <array>
+#include <atcoder/modint>
+
+namespace ac = atcoder;
+
+template <class T, int D>
+struct Vector { ... };
+
+template <class T, int D>
+struct Matrix { ... };
+
+using mint = ac::modint1000000007;
+using Vec = Vector<mint, 3>;
+using Mat = Matrix<mint, 3>;
+
+mint calc(int n, int a) {
+    Vec v;  // p, q, psum
+    v[0] = 1;
+
+    Mat m;
+    m[0][0] = a, m[0][1] = mint(a) * a - 1;
+    m[1][0] = 1, m[1][1] = a;
+    m[2][0] = 1, m[2][2] = 1;
+
+    auto psum = (m.pow(n) * v)[2];
+    return psum * 2 - n;
+}
+
+void solve() {
+    int a, l, r;
+    std::cin >> a >> l >> r;
+
+    auto ans = calc(r + 1, a) - calc(l, a);
+    std::cout << ans.val() << "\n";
+}
+```
+

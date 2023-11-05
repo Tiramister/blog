@@ -2,12 +2,9 @@
 title: "yukicoder No.1201 お菓子配り-4"
 date: 2020-08-29
 tags: [yukicoder]
-links:
-  - label: "Problem link"
-    url: "https://yukicoder.me/problems/no/1201"
-  - label: "My Submission"
-    url: "https://yukicoder.me/submissions/543046"
 ---
+
+[No.1201 お菓子配り-4 - yukicoder](https://yukicoder.me/problems/no/1201)
 
 ## 問題
 
@@ -87,4 +84,37 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[#543046 (C++17) No.1201 お菓子配り-4 - yukicoder](https://yukicoder.me/submissions/543046)
+
+```cpp
+#include <iostream>
+#include <numeric>
+#include <vector>
+
+template <int MOD>
+struct ModInt { ... };
+
+constexpr int MOD = 1000000007;
+using mint = ModInt<MOD>;
+
+using lint = long long;
+
+void solve() {
+    int n, m;
+    std::cin >> n >> m;
+
+    std::vector<lint> xs(n), ys(m);
+    for (auto& x : xs) std::cin >> x;
+    for (auto& y : ys) std::cin >> y;
+
+    mint ans = 0;
+    for (auto a : xs) {
+        for (auto b : ys) {
+            ans += a * b + a - b + std::gcd(a, b);
+        }
+    }
+
+    std::cout << ans << "\n";
+}
+```
+

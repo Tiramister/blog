@@ -2,12 +2,9 @@
 title: "AtCoder Beginner Contest 126 F - XOR Matching"
 date: 2019-05-20
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/abc126/tasks/abc126_f
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/abc126/submissions/5484245
 ---
+
+[F - XOR Matching](https://atcoder.jp/contests/abc126/tasks/abc126_f)
 
 ## 問題
 
@@ -27,11 +24,55 @@ links:
 
 これといって良いアイデアが浮かばなかったので、とりあえず以下のコードで実験することにした。
 
-{{<code file="0.cpp" language="cpp" title="実験コード">}}
+
+```cpp
+int main() {
+    int M;
+    cin >> M;
+
+    int S = 1 << M;
+    vector<int> A(S * 2);  // {0, 0, 1, 1, ..., 2^M-1, 2^M-1}
+    for (int i = 0; i < S; ++i) {
+        A[i * 2] = A[i * 2 + 1] = i;
+    }
+
+    // next_permutationで全パターンを調べる
+    do {
+        vector<int> acc(S * 2 + 1, 0);  // 累積xor
+        for (int i = 0; i < S * 2; ++i) {
+            acc[i + 1] = acc[i] ^ A[i];
+        }
+
+        // 上の式で区間xorを計算
+        set<int> B;
+        for (int i = 0; i < S * 2; ++i) {
+            for (int j = i + 1; j < S * 2; ++j) {
+                if (A[i] == A[j]) B.insert(acc[i] ^ acc[j] ^ A[i]);
+            }
+        }
+
+        // 区間xorの値が1種類なら条件成立
+        if (B.size() == 1) {
+            cout << *B.begin() << ":" << A << endl;
+            // setの出力はテンプレでwrapしてある
+        }
+    } while (next_permutation(A.begin(), A.end()));
+
+    return 0;
+}
+```
 
 $M = 2, K = 1$ の解を求めると以下の通り。
 
-{{<code file="1.txt" language="txt" title="実験結果">}}
+```
+...
+0:[0,0,3,3,2,2,1,1,]
+1:[0,1,0,2,3,1,3,2,]
+1:[0,1,0,3,2,1,2,3,]
+0:[0,1,1,0,2,2,3,3,]
+...
+
+```
 
 `1:[0,1,0,3,2,1,2,3,]` がとても好例で、ここから $a, b, c, \\cdots, c, b, a$ のように配置をすると $a\_i = a, b, c$ の場合に値が一致することに気づく。この $\\cdots$ の部分が $K$ になるようにすればいい。というか $K$ 単体をそこに置けばいい。
 
@@ -55,4 +96,50 @@ $$
 
 ## 実装例
 
-{{<code file="2.cpp" language="cpp">}}
+[提出 #5484245 - AtCoder Beginner Contest 126](https://atcoder.jp/contests/abc126/submissions/5484245)
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int M, K;
+    cin >> M >> K;
+
+    // コーナーケース
+    // M=0は下とまとめて良い
+    if (M == 1) {
+        if (K >= 1) {
+            cout << -1 << endl;
+        } else {
+            cout << "0 0 1 1" << endl;
+        }
+        return 0;
+    }
+
+    // 可能性判定
+    if (K >= (1 << M)) {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    // 前半の出力
+    for (int i = 0; i < (1 << M); ++i) {
+        if (i != K) {
+            cout << i << " ";
+        }
+    }
+    cout << K << " ";
+
+    // 後半の出力(逆順にするだけ)
+    for (int i = (1 << M) - 1; i >= 0; --i) {
+        if (i != K) {
+            cout << i << " ";
+        }
+    }
+    cout << K << " " << endl;
+
+    return 0;
+}
+```

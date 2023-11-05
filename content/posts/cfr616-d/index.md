@@ -2,12 +2,9 @@
 title: "Codeforces Round 616 D - Coffee Varieties"
 date: 2020-02-18
 tags: [codeforces]
-links:
-  - label: "Problem link"
-    url: "https://codeforces.com/contest/1290/problem/D"
-  - label: "My Submission"
-    url: "https://codeforces.com/contest/1290/submission/70728998"
 ---
+
+[Problem - D - Codeforces](https://codeforces.com/contest/1290/problem/D)
 
 ## 問題
 
@@ -46,4 +43,59 @@ $(a\_i)$ の中に何種類の整数があるかを，以下の質問回数以�
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[Submission #70728998 - Codeforces](https://codeforces.com/contest/1290/submission/70728998)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric>
+
+bool query(int i) {
+    ++i;
+    if (i <= 0) {
+        std::cout << 'R' << std::endl;
+        return false;
+    }
+
+    std::cout << "? " << i << std::endl;
+    char c;
+    std::cin >> c;
+    return c == 'Y';
+}
+
+void solve() {
+    int n, k;
+    std::cin >> n >> k;
+    int bsize = (k == 1 ? 1 : k / 2);
+    int m = n / bsize;
+
+    std::vector<bool> ans(n, true);
+    for (int s = 0; s < m / 2; ++s) {
+        int v = s;
+
+        std::vector<bool> visited(m, false);
+        int d = 1, sign = 1;
+
+        while (true) {
+            visited[v] = true;
+
+            // ブロックvの始点
+            int base = v * bsize;
+            for (int i = 0; i < bsize; ++i) {
+                int u = base + i;
+                if (!ans[u] || query(u)) ans[u] = false;
+            }
+
+            // 次の頂点へ
+            v = (v + d * sign + m) % m;
+            ++d, sign = -sign;
+            if (visited[v]) break;
+        }
+        query(-1);
+    }
+
+    std::cout << "! " << std::accumulate(ans.begin(), ans.end(), 0)
+              << std::endl;
+}
+```
+

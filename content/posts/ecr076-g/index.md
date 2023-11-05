@@ -2,12 +2,9 @@
 title: "Educational Codeforces Round 76 G - Divisor Set"
 date: 2020-02-11
 tags: [codeforces]
-links:
-  - label: "Problem link"
-    url: "https://codeforces.com/contest/1257/problem/G"
-  - label: "My Submission"
-    url: "https://codeforces.com/contest/1257/submission/70782672"
 ---
+
+[Problem - G - Codeforces](https://codeforces.com/contest/1257/problem/G)
 
 ## 問題
 
@@ -34,4 +31,72 @@ $x$ の約数の集合 $S$ であって，どの相異なる 2 要素も約数�
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[Submission #68987208 - Codeforces](https://codeforces.com/contest/1221/submission/68987208)
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <map>
+
+template <class T>
+using MaxHeap = std::priority_queue<T>;
+template <class T>
+using MinHeap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
+
+template <int MOD>
+struct ModInt { ... };
+
+constexpr int MOD = 998244353;
+using mint = ModInt<MOD>;
+
+template <int MOD, int Root>
+struct NumberTheoreticalTransform { ... };
+
+using mints = std::vector<mint>;
+using NTT = NumberTheoreticalTransform<MOD, 3>;
+
+const NTT Ntt;
+
+// priority queue用の比較関数
+struct Compare {
+    bool operator()(const mints& a, const mints& b) {
+        return a.size() > b.size();
+    }
+};
+
+void solve() {
+    int n;
+    std::cin >> n;
+
+    std::map<int, int> cnt;
+    for (int i = 0; i < n; ++i) {
+        int x;
+        std::cin >> x;
+        if (!cnt.count(x)) cnt[x] = 0;
+        ++cnt[x];
+    }
+
+    // 多項式をpriority queueに突っ込む
+    std::priority_queue<mints, std::vector<mints>, Compare> que;
+    for (auto p : cnt) {
+        int q = p.second;
+        auto v = std::vector<mint>(q + 1, 1);
+        que.emplace(v);
+    }
+
+    // サイズの小さい方からマージ
+    while (que.size() > 1) {
+        auto f = que.top();
+        que.pop();
+        auto g = que.top();
+        que.pop();
+        mints h = Ntt.ntt(f, g);
+        que.push(h);
+    }
+
+    auto f = que.top();
+    std::cout << f[n / 2] << std::endl;
+}
+```
+

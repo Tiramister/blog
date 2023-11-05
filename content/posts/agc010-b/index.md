@@ -2,10 +2,9 @@
 title: "AtCoder Grand Contest 010 B - Boxes"
 date: 2018-11-10
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc010/tasks/agc010_b
 ---
+
+[B - Boxes](https://atcoder.jp/contests/agc010/tasks/agc010_b)
 
 ## 概要
 
@@ -60,4 +59,44 @@ $$
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #4780166 - AtCoder Grand Contest 010](https://atcoder.jp/contests/agc010/submissions/4780166)
+
+```cpp
+#include <iostream>
+using namespace std;
+using ll = long long;
+
+int main() {
+    ll N;
+    cin >> N;
+
+    ll A[N], sum = 0;
+    for (ll i = 0; i < N; ++i) {
+        cin >> A[i];
+        sum += A[i];
+    }
+
+    if (sum % (N * (N + 1) / 2) > 0) {
+        cout << "NO" << endl;
+        return 0;
+    }
+
+    // 合計操作回数
+    ll M = sum / (N * (N + 1) / 2);
+
+    for (ll i = 0; i < N; ++i) {
+        ll d = A[(i + 1) % N] - A[i];
+
+        // 箱iの選ばれる回数は(M-d)/Nとなる
+        // この値は非負整数でなくてはならない
+        if (M < d || (M - d) % N > 0) {
+            cout << "NO" << endl;
+            return 0;
+        }
+    }
+
+    cout << "YES" << endl;
+    return 0;
+}
+```
+

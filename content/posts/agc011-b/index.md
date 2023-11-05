@@ -2,12 +2,9 @@
 title: "AtCoder Grand Contest 011 B - Colorful Creatures"
 date: 2018-11-11
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc011/tasks/agc011_b
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/agc011/submissions/34713000
 ---
+
+[B - Colorful Creatures](https://atcoder.jp/contests/agc011/tasks/agc011_b)
 
 ## 概要
 
@@ -44,4 +41,38 @@ $i$ 番目のスライムが最後まで残れるかどうか判定する方法�
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #34713000 - AtCoder Grand Contest 011](https://atcoder.jp/contests/agc011/submissions/34713000)
+
+```cpp
+#include <algorithm>
+#include <iostream>
+using namespace std;
+using ll = long long;
+
+int main() {
+    ll N;
+    cin >> N;
+    ll A[N];
+    for (ll i = 0; i < N; ++i) {
+        cin >> A[i];
+    }
+    sort(A, A + N);
+
+    ll ans = 0, sum = 0;
+    // sum = i匹目までの大きさの総和
+
+    for (ll i = 0; i < N; ++i) {
+        // i匹目まで全部くっついたやつはi+1匹目を吸収できるか?
+        if (sum * 2 < A[i]) {
+            // 吸収できないのでカウントリセット
+            ans = 0;
+        }
+        sum += A[i];
+        ++ans;
+    }
+
+    cout << ans << endl;
+    return 0;
+}
+```
+

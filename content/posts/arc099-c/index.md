@@ -2,12 +2,9 @@
 title: "AtCoder Regular Contest 099 C - Minimization"
 date: 2018-09-17
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/arc099/tasks/arc099_a
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/arc099/submissions/3213090
 ---
+
+[C - Minimization](https://atcoder.jp/contests/arc099/tasks/arc099_a)
 
 ## 概要
 
@@ -59,8 +56,21 @@ $$
 
 ## 回答例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #3213090 - AtCoder Regular Contest 099](https://atcoder.jp/contests/arc099/submissions/3213090)
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int N, K;
+    cin >> N >> K;
+    cout << (N + K - 3) / (K - 1) << endl;
+    return 0;
+}
+```
 
 $\\lceil \\frac\{a\}\{b\} \\rceil = \\lfloor \\frac\{a + b - 1\}\{b\} \\rfloor$ で計算できるため、上のような式で答えが求まる。
 
 そして今まで見てきた通り、答えは $N$ と $K$ のみに依存していて **具体的な数列の要素は一切不要** である。こういう場合、上のように標準入力を受け取らずにコードを終了しても問題はない。
+

@@ -2,12 +2,9 @@
 title: "AtCoder Grand Contest 036 A - Triangle"
 date: 2019-07-23
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/agc036/tasks/agc036_a
-  - label: My Submission
-    url: https://atcoder.jp/contests/agc036/submissions/6512335
 ---
+
+[A - Triangle](https://atcoder.jp/contests/agc036/tasks/agc036_a)
 
 ## 問題
 
@@ -54,4 +51,46 @@ $$
 
 提出時には不要だが、以下のように assert をかけておくと予期しないバグに気づけて便利。
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #6512335 - AtCoder Grand Contest 036](https://atcoder.jp/contests/agc036/submissions/6512335)
+
+```cpp
+using namespace std;
+using lint = long long;
+
+// Z * Z < Sを満たす最小のZを求める
+lint sqrti(lint S) {
+    lint ok = 0, ng = 1e9 + 1;
+    while (ng - ok > 1) {
+        lint mid = (ok + ng) / 2;
+        (mid * mid < S ? ok : ng) = mid;
+    }
+    return ok;
+}
+
+int main() {
+    lint S;
+    cin >> S;
+    lint Z = sqrti(S);
+
+    vector<lint> X(3), Y(3);
+    X[0] = Y[0] = 0, X[2] = 1;
+
+    if (S <= Z * (Z + 1)) {
+        Y[1] = Z * (Z + 1) - S;
+        X[1] = Z, Y[2] = Z + 1;
+    } else {
+        Y[1] = (Z + 1) * (Z + 1) - S;
+        X[1] = Y[2] = Z + 1;
+    }
+
+    assert(X[1] * Y[2] - X[2] * Y[1] == S);
+    for (int i = 0; i < 3; ++i) {
+        assert(X[i] <= 1e9);
+        assert(Y[i] <= 1e9);
+        cout << X[i] << " " << Y[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
+```
+

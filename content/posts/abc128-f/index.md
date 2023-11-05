@@ -2,12 +2,9 @@
 title: "AtCoder Beginner Contest 128 F - Frog Jump"
 date: 2019-11-29
 tags: [atcoder]
-links:
-  - label: Problem link
-    url: https://atcoder.jp/contests/abc128/tasks/abc128_f
-  - label: My Submission
-    url: https://atcoder.jp/contests/abc128/submissions/8689054
 ---
+
+[F - Frog Jump](https://atcoder.jp/contests/abc128/tasks/abc128_f)
 
 ## 問題
 
@@ -45,4 +42,35 @@ $a, b$ を上手く決めることで，スコアを最大化せよ．
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #8689054 - AtCoder Beginner Contest 128](https://atcoder.jp/contests/abc128/submissions/8689054)
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using lint = long long;
+
+int main() {
+    int n;
+    std::cin >> n;
+
+    std::vector<lint> ss(n);
+    for (auto& s : ss) std::cin >> s;
+
+    lint ans = 0;
+    for (int k = 1; k < n; ++k) {
+        int l = 0, r = n - 1;
+        lint sum = 0;
+
+        while (r > k && (r > l || r % k != 0)) {
+            sum += ss[l] + ss[r];
+            ans = std::max(ans, sum);
+            l += k;
+            r -= k;
+        }
+    }
+
+    std::cout << ans << std::endl;
+    return 0;
+}
+```

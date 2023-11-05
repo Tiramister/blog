@@ -2,7 +2,6 @@
 title: "部分永続 UnionFind の実装"
 date: 2018-09-13
 tags: [algorithm]
-links:
 ---
 
 ## 初めに
@@ -30,7 +29,60 @@ links:
 
 基本的には UnionFind に手を加えるだけでできるので、今回は以下の私のライブラリをイジることにします。
 
-{{<code file="0.cpp" language="cpp">}}
+```cpp
+// 頂点数
+const int V_NUM = 100000;
+
+class UnionFind {
+public:
+    int par[V_NUM];  // 各頂点の親
+    int rank[V_NUM]; // その頂点を根とする木の深さ
+    int num[V_NUM];  // その頂点を根とする木の頂点数
+
+    explicit UnionFind() {
+        for (int i = 0; i < V_NUM; ++i) {
+            par[i] = i;
+        }
+        fill(rank, rank + V_NUM, 0);
+        fill(num, num + V_NUM, 1);
+    }
+
+    // xの親を返す + 経路圧縮
+    int find(int x) {
+        if (par[x] == x) {
+            return x;
+        } else {
+            return par[x] = find(par[x]);
+        }
+    }
+
+    // xとyが同じ木に属するか判定
+    bool same(int x, int y) {
+        return find(x) == find(y);
+    }
+
+    // xとyを含む木を結合する
+    void unite(int x, int y) {
+        x = find(x);
+        y = find(y);
+
+        if (x == y) return;
+
+        // rank[x] >= rank[y]にする
+        if (rank[x] < rank[y]) swap(x, y);
+
+        // rankの大きい方、つまりxにyをくっつける
+        par[y] = x;
+        num[x] += num[y];
+        if (rank[x] == rank[y]) rank[x]++;
+    }
+
+    // xを含む木の頂点数を返す
+    int size(int x) {
+        return num[find(x)];
+    }
+};
+```
 
 ### メンバ変数
 
@@ -49,7 +101,23 @@ links:
 
 以上をまとめると、メンバ変数とコンストラクタが以下のように変わります。
 
-{{<code file="1.cpp" language="cpp">}}
+```cpp
+    int now;         // 現在時刻
+    int par[V_NUM];  // 各頂点の親
+    int rank[V_NUM]; // その頂点を根とする木の深さ
+    int time[V_NUM]; // 親がいつ更新されたか
+    vector<pair<int, int>> num[V_NUM]; // (時刻, 頂点数)を要素にもつvector
+
+    explicit persistentUF() {
+        now = 0;
+        for (int i = 0; i < V_NUM; ++i) {
+            par[i] = i;
+            num[i].push_back(make_pair(0, 1)); // 時刻0にて頂点数は1
+        }
+        fill(rank, rank + V_NUM, 0);
+        fill(time, time + V_NUM, INF); // 自身が根の間は便宜上INFとする
+    }
+```
 
 ### find 関数
 
@@ -64,7 +132,21 @@ links:
 
 以上で全パターンを網羅できました。というわけで find 関数と、ついでに same 関数も書き換えましょう。
 
-{{<code file="2.cpp" language="cpp">}}
+```cpp
+    // 時刻tにおけるxの親を返す
+    int find(int x, int t) {
+        if (t < time[x]) {
+            return x;
+        } else {
+            return find(par[x], t);
+        }
+    }
+
+    // 時刻tにてxとyが同じ木に属するか判定
+    bool same(int x, int y, int t) {
+        return find(x, t) == find(y, t);
+    }
+```
 
 ### unite 関数
 
@@ -73,7 +155,25 @@ links:
 ただし重要な点を 1 つ。部分永続 UnionFind では経路圧縮を行わないため、rank によってバランスを保たなければ偏った入力のときに計算量が $O(N)$ になってしまいます。
 UnionFind を rank なしで実装した方も、今回はちゃんと rank つきで実装しなければなりません。
 
-{{<code file="3.cpp" language="cpp">}}
+```cpp
+    // 頂点xとyを繋げる
+    void unite(int x, int y) {
+        ++now; // 時間を進める
+
+        x = find(x, now);
+        y = find(y, now);
+
+        if (x == y) return;
+
+        // rank[x] >= rank[y]にする
+        if (rank[x] < rank[y]) swap(x, y);
+
+        // rankの大きい方、つまりxにyをくっつける
+        par[y] = x;
+        time[y] = now; // yの親がxに更新されたので、timeに時刻を記録
+        if (rank[x] == rank[y]) ++rank[x];
+    }
+```
 
 上の実装では、まだ `num` の更新は省いてあります。
 部分永続 UnionFind に変更する上で一番処理が面倒なのが `num` の扱いなので、これの更新は次章にて追加します。
@@ -90,7 +190,28 @@ size 関数の説明に入る前に、メンバ変数 `num` の更新を実装�
 これに基づいて、 unite 関数に `num` の更新を加えます。
 コメントにある通り、 `num` の更新位置には気をつけましょう[^num_update]。
 
-{{<code file="4.cpp" language="cpp">}}
+```cpp
+    // 頂点xとyを繋げる
+    void unite(int x, int y) {
+        ++now; // 時間を進める
+
+        x = find(x, now);
+        y = find(y, now);
+
+        if (x == y) return;
+
+        // rank[x] >= rank[y]にする
+        if (rank[x] < rank[y]) swap(x, y);
+
+        // parの更新を先にやるとバグるので注意
+        num[x].push_back(make_pair(now, size(x, now) + size(y, now)));
+
+        // rankの大きい方、つまりxにyをくっつける
+        par[y] = x;
+        time[y] = now; // timeに時刻を記録
+        if (rank[x] == rank[y]) rank[x]++;
+    }
+```
 
 [^num_update]: `num[x].push_back(make_pair(now, size(x, now - 1) + size(y, now - 1)))` のように丁寧に処理すれば、更新位置はどこでも問題ありません。`
 
@@ -102,7 +223,25 @@ size 関数の説明に入る前に、メンバ変数 `num` の更新を実装�
 
 というわけで、 size 関数は以下のようになります。
 
-{{<code file="5.cpp" language="cpp">}}
+```cpp
+    // 時刻tにおいて、頂点xを含む木の要素数を求める
+    int size(int x, int t) {
+        x = find(x, t);
+
+        // 適切な情報が入ったindexを二分探索で探り当てる
+        int ok = 0, ng = num[x].size();
+        while (ng - ok > 1) {
+            int mid = (ok + ng) / 2;
+            if (num[x][mid].first <= t) {
+                ok = mid;
+            } else {
+                ng = mid;
+            }
+        }
+
+        return num[x][ok].second;
+    }
+```
 
 以上で全体の実装が完了です。お疲れ様でした。
 
@@ -110,12 +249,147 @@ size 関数の説明に入る前に、メンバ変数 `num` の更新を実装�
 
 ここまで実装してきたものをまとめると、以下のようになります。
 
-{{<code file="6.cpp" language="cpp">}}
+```cpp
+const int INF = 1 << 25;
+
+// 頂点数
+const int V_NUM = 100000;
+
+class persistentUF {
+public:
+    int now;         // 現在時刻
+    int par[V_NUM];  // 各頂点の親
+    int rank[V_NUM]; // その頂点を根とする木の深さ
+    int time[V_NUM]; // 親がいつ更新されたか
+    vector<pair<int, int>> num[V_NUM]; // (時刻, 頂点数)を要素にもつvector
+
+    explicit persistentUF() {
+        now = 0;
+        for (int i = 0; i < V_NUM; ++i) {
+            par[i] = i;
+            num[i].push_back(make_pair(0, 1)); // 時刻0にて頂点数は1
+        }
+        fill(rank, rank + V_NUM, 0);
+        fill(time, time + V_NUM, INF); // 自身が根の間は便宜上INFとする
+    }
+
+    // 時刻tにおけるxの親を返す
+    int find(int x, int t) {
+        if (t < time[x]) {
+            return x;
+        } else {
+            return find(par[x], t);
+        }
+    }
+
+    // 時刻tにてxとyが同じ木に属するか判定
+    bool same(int x, int y, int t) {
+        return find(x, t) == find(y, t);
+    }
+
+    // 頂点xとyを繋げる
+    int unite(int x, int y) {
+        ++now; // 時間を進める
+
+        x = find(x, now);
+        y = find(y, now);
+
+        if (x == y) return now;
+
+        // rank[x] >= rank[y]にする
+        if (rank[x] < rank[y]) swap(x, y);
+
+        // parの更新を先にやるとバグるので注意
+        num[x].push_back(make_pair(now, size(x, now) + size(y, now)));
+
+        // rankの大きい方、つまりxにyをくっつける
+        par[y] = x;
+        time[y] = now; // timeに時刻を記録
+        if (rank[x] == rank[y]) ++rank[x];
+    }
+
+    // 時刻tにおいて、頂点xを含む木の要素数を返す
+    int size(int x, int t) {
+        x = find(x, t);
+
+        // 適切な情報が入ったindexを二分探索で探り当てる
+        int ok = 0, ng = num[x].size();
+        while (ng - ok > 1) {
+            int mid = (ok + ng) / 2;
+            if (num[x][mid].first <= t) {
+                ok = mid;
+            } else {
+                ng = mid;
+            }
+        }
+
+        return num[x][ok].second;
+    }
+};
+```
 
 とある問題に試しに投げたら無事通ったので、バグはないはずです。
 
 ついでに要素数を省いたものも貼っておきます。
 
-{{<code file="7.cpp" language="cpp">}}
+```cpp
+const int INF = 1 << 25;
+
+// 頂点数
+const int V_NUM = 100000;
+
+class persistentUF {
+public:
+    int now;         // 現在時刻
+    int par[V_NUM];  // 各頂点の親
+    int rank[V_NUM]; // その頂点を根とする木の深さ
+    int time[V_NUM]; // 親がいつ更新されたか
+
+    explicit persistentUF() {
+        now = 0;
+        for (int i = 0; i < V_NUM; ++i) {
+            par[i] = i;
+        }
+        fill(rank, rank + V_NUM, 0);
+        fill(time, time + V_NUM, INF); // 自身が根の間は便宜上INFとする
+    }
+
+    // 時刻tにおけるxの親を返す
+    int find(int x, int t) {
+        if (t < time[x]) {
+            return x;
+        } else {
+            return find(par[x], t);
+        }
+    }
+
+    // 時刻tにてxとyが同じ木に属するか判定
+    bool same(int x, int y, int t) {
+        return find(x, t) == find(y, t);
+    }
+
+    // 頂点xとyを繋げる
+    // 繋げた直後の時刻を返す
+    int unite(int x, int y) {
+        ++now; // 時間を進める
+
+        x = find(x, now);
+        y = find(y, now);
+
+        if (x == y) return now;
+
+        // rank[x] >= rank[y]にする
+        if (rank[x] < rank[y]) swap(x, y);
+
+        // rankの大きい方、つまりxにyをくっつける
+        par[y] = x;
+        time[y] = now; // timeに時刻を記録
+        if (rank[x] == rank[y]) ++rank[x];
+
+        return now;
+    }
+};
+```
 
 やはり幾分スッキリしますね。なおこちらはテストしてませんが、不要な部分を切り取っただけなので多分問題はないでしょう。
+

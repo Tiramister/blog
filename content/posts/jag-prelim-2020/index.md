@@ -2,12 +2,11 @@
 title: ICPC 模擬国内予選 2020 参加記
 date: 2020-10-27
 tags: [icpc]
-links:
-  - label: JAG-ICPC コンテストページ
-    url: https://jag-icpc.org/?2020%2FPractice%2F%E6%A8%A1%E6%93%AC%E5%9B%BD%E5%86%85%E4%BA%88%E9%81%B8
-  - label: AOJ 問題ページ
-    url: https://onlinejudge.u-aizu.ac.jp/challenges/sources/JAG/Prelim?year=2020
 ---
+
+[2020/Practice/模擬国内予選 - ICPC OB/OG の会](https://jag-icpc.org/?2020%2FPractice%2F%E6%A8%A1%E6%93%AC%E5%9B%BD%E5%86%85%E4%BA%88%E9%81%B8)
+
+[JAG Prelim < Challenges | Aizu Online Judge](https://onlinejudge.u-aizu.ac.jp/challenges/sources/JAG/Prelim?year=2020)
 
 ## 結果
 
@@ -18,7 +17,7 @@ links:
 
 |                 全体                  | 学内 |                 予選通過                 |
 | :-----------------------------------: | :--: | :--------------------------------------: |
-| {{<color lightgreen>}}7th{{</color>}} | 4th  | {{<color lightgreen>}}PASSED{{</color>}} |
+| {{<color limegreen>}}7th{{</color>}} | 4th  | {{<color limegreen>}}PASSED{{</color>}} |
 
 ## 振り返り
 
@@ -26,13 +25,13 @@ links:
 
 コンテスト開始後、さかな、おくら、僕がそれぞれ A、B、D を読む。
 
-A、B は特に問題もなく {{<color lightgreen>}}AC{{</color>}}。先に C に取り掛かったさかなが解法を思いつき、後から来たおくらに確認してもらって実装に移る。
+A、B は特に問題もなく {{<color limegreen>}}AC{{</color>}}。先に C に取り掛かったさかなが解法を思いつき、後から来たおくらに確認してもらって実装に移る。
 
 一方僕はというと、D の考察が中々が進まず「分かんね〜」と連呼していた。
 しばらくして、通常の括弧列における高さ関数(?)を応用した解法を思いつき、正当性が不安になりながらも実装する。
-サンプルが通ったので投げると無事 {{<color lightgreen>}}AC{{</color>}} で一安心。
+サンプルが通ったので投げると無事 {{<color limegreen>}}AC{{</color>}} で一安心。
 
-その後しばらくして C の実装が終わり {{<color lightgreen>}}AC{{</color>}}。
+その後しばらくして C の実装が終わり {{<color limegreen>}}AC{{</color>}}。
 後から C を読んだが実装が結構面倒そうで、これはさかなが実装して正解だったと感じた。
 
 ### 中盤 (E-F)
@@ -44,10 +43,10 @@ E の解法が分かった辺りでさかなが C を通したので、僕と F 
 F は露骨に苦行なので、さかながやることに。
 G は幾何なのだが、一応 $O(N^3)$ が生えたので僕が実装に取り掛かる。
 
-しばらくして E の実装が終わり、僕が少し確認して {{<color lightgreen>}}AC{{</color>}}。
+しばらくして E の実装が終わり、僕が少し確認して {{<color limegreen>}}AC{{</color>}}。
 一方で G の解法に穴がある(多角形内部を突っ切るパスが valid になる)ことに気づいて萎える。
 
-それからしばらくして、F をさかなが {{<color lightgreen>}}AC (FA){{</color>}}。
+それからしばらくして、F をさかなが {{<color limegreen>}}AC (FA){{</color>}}。
 チームメイトながら正直「は？」ってなった。怖い。
 
 ### 終盤 (G-H)
@@ -73,3 +72,4 @@ G は幾何なのだが、一応 $O(N^3)$ が生えたので僕が実装に取�
 - A-F はかなり良かった。特に F はおかしい。
 - H は正直頭が回ってなかったと感じた(さかなに言われるまで、閉路があると 0 になることに気づかなかった)。
 - 幾何ライブラリを整理しよう！($n$ 回目)
+

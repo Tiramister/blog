@@ -4,11 +4,11 @@ date: 2019-09-17
 tags: [icpc]
 links:
   - label: Day1
-    url: https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day1
+    url: 
   - label: Day2
-    url: https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day2
+    url: 
   - label: Day3
-    url: https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day3
+    url: 
 ---
 
 The atama 3 人で JAG(ACM-ICPC OB/OG の会)が主催する夏合宿に参加してきました。
@@ -33,6 +33,8 @@ The atama 3 人で JAG(ACM-ICPC OB/OG の会)が主催する夏合宿に参加�
 ### Day1 の貢献は少ない
 
 その後人がぞろぞろと会場入りして、Day1 のコンテストが始まった。
+
+[Aizu Online Judge Arena](https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day1)
 
 - いつも通り A 問題をさかな、B 問題をおくら、C 問題を僕が読む
 - B 問題をおくらが実装 → {{<color lightgreen>}}AC{{</color>}}
@@ -105,6 +107,8 @@ The atama 3 人で JAG(ACM-ICPC OB/OG の会)が主催する夏合宿に参加�
 
 その後しばらく部屋で寝て、Day2 のコンテストが始まった。
 
+[Aizu Online Judge Arena](https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day2)
+
 - 難易度順がランダムということで、FA 狙いで各位バラバラに問題を読むことに
 - 僕が E 問題から読み始める
   - 面倒そうな式だな → いやギャグやんけこれ → {{<color lightgreen>}}AC{{</color>}}
@@ -170,6 +174,8 @@ The atama 3 人で JAG(ACM-ICPC OB/OG の会)が主催する夏合宿に参加�
 
 それはさておき Day3 のコンテストが始まった。
 
+[Aizu Online Judge Arena](https://onlinejudge.u-aizu.ac.jp/services/room.html#JAGSummerCamp19Day3)
+
 - やや変則的だがさかながテンプレを書きつつ僕が A 問題を考察することに
   - 解けたので解法をさかなに伝える → {{<color lightgreen>}}AC{{</color>}}
 - 実装中に僕が B 問題を考察する
@@ -231,3 +237,4 @@ JAG の皆さん、writer 陣の皆さん、本当にありがとうございま
 </blockquote>
 
 {{</raw>}}
+

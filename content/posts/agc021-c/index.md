@@ -2,12 +2,9 @@
 title: "AtCoder Grand Contest 021 C - Tiling"
 date: 2018-09-11
 tags: [atcoder]
-links:
-  - label: "Problem"
-    url: https://atcoder.jp/contests/agc021/tasks/agc021_c
-  - label: "My Submission"
-    url: https://atcoder.jp/contests/agc021/submissions/3177420
 ---
+
+[C - Tiling](https://atcoder.jp/contests/agc021/tasks/agc021_c)
 
 ## 概要
 
@@ -55,4 +52,7 @@ $N$ と $M$ の偶奇で場合分けする。
 ## 実装例
 
 以上を全て考慮してグリッドを埋めれば AC なのだが、いかんせん実装が難しい。
-私が書いたコードもコピーだらけで正直あまり見せたくないので、見たい人はページ上部のリンクを踏んでください。
+私が書いたコードもコピーだらけで正直あまり見せたくないので、見たい人は以下のリンクを踏んでください。
+
+[提出 #3177420 - AtCoder Grand Contest 021](https://atcoder.jp/contests/agc021/submissions/3177420)
+

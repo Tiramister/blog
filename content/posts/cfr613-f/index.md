@@ -2,14 +2,13 @@
 title: "Codeforces Round 613 F - Classical?"
 date: 2020-01-16
 tags: [codeforces]
-links:
-  - label: Problem link
-    url: http://codeforces.com/contest/1285/problem/F
-  - label: My Submission
-    url: https://codeforces.com/contest/1285/submission/68893805
 ---
 
+{{< hidden >}}
 $\\gdef\\lcm\{\\operatorname\{lcm\}\}\\lcm$
+{{< / hidden >}}
+
+[Problem - F - Codeforces](https://codeforces.com/contest/1285/problem/F)
 
 ## 問題
 
@@ -34,4 +33,91 @@ $g$ の倍数しか考えなくていいので， $\\\{ a\_i \\\}$ から $g$ �
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[Submission #68893805 - Codeforces](https://codeforces.com/contest/1285/submission/68893805)
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+template <class T>
+T gcd(T n, T m) { ... }
+
+using lint = long long;
+constexpr int X = 100000;
+
+int main() {
+    std::vector<std::vector<int>> pss(X + 1);
+    // set of x's factors
+    for (int p = 1; p <= X; ++p) {
+        for (int x = p; x <= X; x += p) {
+            pss[x].push_back(p);
+        }
+    }
+
+    std::vector<int> f(X + 1, 0);
+    // mobius function
+    f[1] = 1;
+    for (int d = 2; d <= X; ++d) {
+        for (int p : pss[d]) {
+            if (p < d) f[d] -= f[p];
+        }
+    }
+
+    // main process
+    int n;
+    std::cin >> n;
+
+    std::vector<int> xs(n);
+    for (auto& x : xs) std::cin >> x;
+    std::sort(xs.rbegin(), xs.rend());
+
+    std::vector<std::vector<int>> yss(X + 1);
+    // x's multipliers
+    for (auto x : xs) {
+        for (auto p : pss[x]) {
+            yss[p].push_back(x / p);
+        }
+    }
+
+    lint ans = 0;
+    std::vector<int> cnt(X + 1, 0), stk;
+
+    for (int d = 1; d <= X; ++d) {
+        const auto& ys = yss[d];
+
+        for (auto y : ys) {
+            while (true) {
+                int c = 0;
+                // number of elements coprime to x in the stack
+                for (auto p : pss[y]) c += cnt[p] * f[p];
+                if (c == 0) break;
+
+                auto x = stk.back();
+                if (gcd(x, y) == 1) {
+                    ans = std::max(ans, (lint)x * y * d);
+                }
+
+                // delete x from the stack
+                for (auto p : pss[x]) --cnt[p];
+                stk.pop_back();
+            }
+
+            // add y to the stack
+            for (auto p : pss[y]) ++cnt[p];
+            stk.push_back(y);
+        }
+
+        // clear the stack and cnt
+        while (!stk.empty()) {
+            auto x = stk.back();
+            for (auto p : pss[x]) --cnt[p];
+            stk.pop_back();
+        }
+    }
+
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
+

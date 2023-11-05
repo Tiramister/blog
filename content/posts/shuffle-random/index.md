@@ -2,12 +2,9 @@
 title: "数列をシャッフルすることでランダム性を持たせるテク"
 date: 2019-01-16
 tags: [algorithm]
-links:
-  - label: "Blogewoosh #6"
-    url: https://codeforces.com/blog/entry/62602
 ---
 
-_この記事の内容は、 [Blogewoosh #6](https://codeforces.com/blog/entry/62602) の内容に基づいています。_
+この記事の内容は、 [Blogewoosh #6](https://codeforces.com/blog/entry/62602) の内容に基づいています。
 
 ## 問題
 
@@ -60,3 +57,4 @@ $N = 10\^5, D = 10\^\{18\}$ にて、期待値は $101000$ 以下となる。
 期待値だけではクエリ数が制約を超える確率は評価できないが、 $2000$ 回の余裕があるので、十分な確率で解けると思っていいだろう[^2]。
 
 [^2]: [このスレッド](https://codeforces.com/blog/entry/62602?#comment-465586)によると、制限回数内で解が求まらない確率は$2.8 \\cdot 10\^\{-18\}$程度だという。
+

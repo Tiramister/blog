@@ -2,14 +2,9 @@
 title: "AtCoder Grand Contest 037 E - Reversing and Concatenating"
 date: 2020-03-02
 tags: [atcoder]
-links:
-  - label: "Problem link"
-    url: "https://atcoder.jp/contests/agc037/tasks/agc037_e"
-  - label: "My Submission"
-    url: "https://atcoder.jp/contests/agc037/submissions/10298405"
-  - label: "My Submission (SA)"
-    url: "https://atcoder.jp/contests/agc037/submissions/10298384"
 ---
+
+[E - Reversing and Concatenating](https://atcoder.jp/contests/agc037/tasks/agc037_e)
 
 ## 問題
 
@@ -37,8 +32,54 @@ links:
 
 ## 実装例
 
-{{<code file="0.cpp" language="cpp">}}
+[提出 #10298405 - AtCoder Grand Contest 037](https://atcoder.jp/contests/agc037/submissions/10298405)
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <string>
+
+void solve() {
+    int n, k;
+    std::string s;
+    std::cin >> n >> k >> s;
+
+    std::string u = s;
+    std::reverse(u.begin(), u.end());
+    u = s + u;
+
+    // 辞書順最小のものを選ぶ
+    int si = 0;
+    for (int i = 1; i < n; ++i) {
+        if (u.substr(i, n) < u.substr(si, n)) si = i;
+    }
+    u = u.substr(si, n);
+
+    // 先頭の文字がいくつ連続するか調べる
+    int l;
+    for (l = 0; l < n; ++l) {
+        if (u[l] != u[0]) break;
+    }
+    auto back = u.substr(l);
+
+    // 倍々にする
+    --k;
+    while (l < n && k > 0) {
+        l = std::min(n, l * 2);
+        --k;
+    }
+
+    // 先頭の文字を連結させて長さnにカット
+    auto ans = std::string(l, u[0]) + back;
+    ans = ans.substr(0, n);
+
+    std::cout << ans << std::endl;
+}
+```
 
 ## 余談
 
-最初 $O(N\^2)$ は無理だと思っていたが，**Suffix Array**を使えば $O(N)$ で解ける．最初の辞書順最小の連続部分文字列を選ぶパートで SA を使い， $i \\leq N$ で rank が最小の $i$ を始点にすればいい．リンクに SA を使った場合の提出も載せてある。
+最初 $O(N\^2)$ は無理だと思っていたが，**Suffix Array** を使えば $O(N)$ で解ける．最初の辞書順最小の連続部分文字列を選ぶパートで SA を使い， $i \\leq N$ で rank が最小の $i$ を始点にすればいい．
+
+[提出 #10298384 - AtCoder Grand Contest 037](https://atcoder.jp/contests/agc037/submissions/10298384)
+
