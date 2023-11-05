@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "NotoSansJP";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/fonts/NotoSansJP-Regular.otf");
+}
+
+@font-face {
+  font-family: "menlo";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/fonts/Menlo-Regular.woff");
+}
+
+:root {
+  --base-font-family: "NotoSansJP", "menlo";
+  --code-font-family: "menlo", monospace;
+}
+
+.framed {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 16px;
+  border-color: lightgray;
+  padding: 0 1em;
+}
+
+.hidden {
+  display: none;
+}
+
