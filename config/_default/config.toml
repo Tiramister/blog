@@ -1,0 +1,7 @@
+baseurl = "/"
+languageCode = "ja"
+paginate = 10
+title = "Tiramister's Blog"
+
+defaultContentLanguage = "ja"
+hasCJKLanguage = true

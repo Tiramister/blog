@@ -1,0 +1,11 @@
+# Markdown renderer configuration
+[tableOfContents]
+startLevel = 2
+endLevel = 4
+
+[highlight]
+noClasses = false
+guessSyntax = true
+lineNos = true
+lineNumbersInTable = true
+tabWidth = 2

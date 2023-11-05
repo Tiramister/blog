@@ -1,0 +1,38 @@
+mainSections = ["posts"]
+rssFullContent = true
+favicon = "/img/favicon.ico"
+
+[sidebar.avatar]
+enabled = true
+local = true
+src = "/img/avatar.png"
+
+[article]
+math = true
+readingTime = true
+
+## Widgets
+[[widgets.homepage]]
+type = "search"
+
+[[widgets.homepage]]
+type = "archives"
+
+[widgets.homepage.params]
+limit = 5
+
+[[widgets.homepage]]
+type = "categories"
+
+[widgets.homepage.params]
+limit = 10
+
+[[widgets.homepage]]
+type = "tag-cloud"
+
+[widgets.homepage.params]
+limit = 10
+
+[[widgets.page]]
+type = "toc"
+
