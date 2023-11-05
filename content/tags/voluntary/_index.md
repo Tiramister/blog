@@ -1,6 +1,4 @@
 ---
-Title: "有志コンテスト"
+title: 有志コンテスト
+description: 有志が開催した競技プログラミングのコンテストの問題解説・参加記。
 ---
-
-有志が開催したコンテストの問題解説・参加記。
-多くの問題は [Aizu Online Judge](https://onlinejudge.u-aizu.ac.jp/challenges/sources) で解くことができる。
